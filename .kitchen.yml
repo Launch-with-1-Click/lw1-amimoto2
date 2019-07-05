@@ -1,31 +1,30 @@
 ---
-driver_plugin: ec2
-driver_config:
+driver:
+  name: ec2
   require_chef_omnibus: latest
   aws_ssh_key_id: <%= ENV['AWS_EC2_KEYPAIR'] %>
-#  aws_access_key_id: <%= ENV['AWS_ACCESS_KEY'] %>              #autoload from ENV:AWS_ACCESS_KEY
-#  aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>   #autoload from ENV:AWS_SECRET_ACCESS_KEY
-
+  associate_public_ip: true
+  subnet_id: <%= ENV['AWS_SUBNET'] %>
+  security_group_ids: <%= ENV['AWS_EC2_SG'].split(',').to_s %>
 transport:
   ssh_key: <%= ENV['AWS_EC2_KEYPASS'] %>
   username: ec2-user
 
-
 platforms:
-- name: amazon-linux-micro-tokyo
-  driver_config:
-    instance_type: t1.micro
-    image_id: ami-923d12f5 # Amazon Linux AMI 2017.03.0 (HVM), SSD Volume Type
-    region: ap-northeast-1
-    availability_zone: ap-northeast-1a
-    tags:
-      Name: test-kitchen-micro
+# - name: amazon-linux-micro-tokyo
+#   driver:
+#     instance_type: t3.micro
+#     image_id: ami-0c3fd0f5d33134a76 # Amazon Linux 2 AMI (HVM), SSD Volume Type
+#     region: ap-northeast-1
+#     availability_zone: ap-northeast-1a
+#     tags:
+#       Name: test-kitchen-micro
 - name: amazon-linux-large-tokyo
-  driver_config:
-    instance_type: c3.large
-    image_id: ami-923d12f5 # Amazon Linux AMI 2017.03.0 (HVM), SSD Volume Type
+  driver:
+    instance_type: c5.large
+    image_id: ami-0c3fd0f5d33134a76 # Amazon Linux 2 AMI (HVM), SSD Volume Type
     region: ap-northeast-1
-    availability_zone: ap-northeast-1a
+    availability_zone: c
     tags:
       Name: test-kitchen-large
 
@@ -43,30 +42,3 @@ suites:
     wordpress:
       db:
         user_name: kitchen
-- name: hhvm-amimoto
-  run_list:
-    - recipe[amimoto::nginx]
-    - recipe[amimoto::default]
-    - recipe[amimoto::nginx_default]
-    - recipe[amimoto::wordpress]
-    - recipe[amimoto::report_handler]
-  attributes:
-    hhvm:
-      enabled: true
-    wordpress:
-      db:
-        user_name: kitchen
-#    redis:
-#      enabled: true
-#    memcached:
-#      enabled: false
-
-#- name: amimoto-nfs
-#  run_list:
-#    - recipe[amimoto::default]
-#    - recipe[testmoto::default]
-#    - recipe[amimoto::report_handler]
-#  attributes: {}
-
-busser:
-  sudo: true
