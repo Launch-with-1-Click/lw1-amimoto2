@@ -13,7 +13,7 @@ default[:yum][:repo][:remi][:php72][:mirrorlist] = 'http://rpms.famillecollet.co
 default[:yum][:repo][:remi][:php72][:baseurl] = 'http://rpms.famillecollet.com/enterprise/6/php72/$basearch/'
 default[:yum][:repo][:remi][:php73][:mirrorlist] = 'http://rpms.famillecollet.com/enterprise/6/php73/mirror'
 default[:yum][:repo][:remi][:php73][:baseurl] = 'http://rpms.famillecollet.com/enterprise/6/php73/$basearch/'
-default[:yum][:repo][:nginx][:baseurl] = 'https://packagecloud.io/amimoto-nginx-mainline/main/el/6/$basearch'
+default[:yum][:repo][:nginx][:baseurl] = 'https://packagecloud.io/amimoto-nginx-mainline/amzn2/el/6/$basearch'
 default[:yum][:repo][:percona][:baseurl] = 'http://repo.percona.com/centos/6Server/os/$basearch/'
 
 if node[:yum][:repo][:amimoto_repo]

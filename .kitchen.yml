@@ -28,6 +28,12 @@ platforms:
     tags:
       Name: test-kitchen-large
 
+provisioner:
+  name: chef_zero
+
+verifier:
+  name: shell
+
 suites:
 - name: amimoto
   run_list:
@@ -38,7 +44,7 @@ suites:
     - recipe[amimoto::report_handler]
   attributes:
     phpfpm:
-      version: "70"
+      version: "73"
     wordpress:
       db:
         user_name: kitchen
