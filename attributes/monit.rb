@@ -65,7 +65,6 @@ default[:monit][:settings][:processes] = [
   },
   {
    :name => 'memcached',
-   :pidfile => '/var/run/memcached/memcached.pid',
    :start => '/sbin/service memcached start',
    :stop  => '/sbin/service memcached stop',
    :rules => [

@@ -31,6 +31,22 @@ end
 ## PHP
 default[:phpfpm][:enabled] = true
 default[:phpfpm][:version] = '73'
+extra_php_versions = ['php7.1', 'php7.2', 'php7.3']
+case node[:phpfpm][:version]
+when '73'
+  default[:phpfpm][:amzn2_extras] = 'php7.3'
+  extra_php_versions.delete(node[:phpfpm][:amzn2_extras])
+  default[:phpfpm][:exclusive_extras] = extra_php_versions
+when '72'
+  default[:phpfpm][:amzn2_extras] = 'php7.2'
+  extra_php_versions.delete(node[:phpfpm][:amzn2_extras])
+  default[:phpfpm][:exclusive_extras] = extra_php_versions
+when '71'
+  default[:phpfpm][:amzn2_extras] = 'php7.1'
+  extra_php_versions.delete(node[:phpfpm][:amzn2_extras])
+  default[:phpfpm][:exclusive_extras] = extra_php_versions
+end
+
 default[:phpfpm][:service_action] = [:disable, :stop]
 if node[:phpfpm][:enabled]
   default[:phpfpm][:service_action] = [:enable, :start]

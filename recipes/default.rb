@@ -46,20 +46,20 @@ end
 # install mysql
 # include_recipe 'amimoto::mysql'
 
-# install httpd
-include_recipe 'amimoto::httpd'
-include_recipe 'amimoto::httpd_default'
-
 # install nginx
 include_recipe 'amimoto::nginx'
 #include_recipe 'amimoto::nginx_default'
 
 # install php
-# if node[:mod_php7][:enabled]
-#   include_recipe 'amimoto::mod_php7'
-# else
-#   include_recipe 'amimoto::php'
-# end
+if node[:mod_php7][:enabled]
+  include_recipe 'amimoto::mod_php7'
+else
+  include_recipe 'amimoto::php'
+end
+
+# install httpd
+include_recipe 'amimoto::httpd'
+include_recipe 'amimoto::httpd_default'
 
 if (node[:memory][:total].to_i / 1024) > 1024
   # memcached install

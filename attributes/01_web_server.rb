@@ -124,6 +124,7 @@ default[:nginx][:config][:cf_ips] = %w{
 ## Apache
 default[:httpd][:enable] = false
 default[:httpd][:packages] = %w{
+  php
   httpd
   httpd-devel
   httpd-manual

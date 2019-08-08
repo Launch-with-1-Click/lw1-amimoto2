@@ -7,16 +7,21 @@ end
 # php install
 yum_package 'libwebp' do
   action [:install, :upgrade]
-  options "--enablerepo=epel --disablerepo=amzn-main"
+  # options "--enablerepo=epel --disablerepo=amzn-main"
   notifies :run, 'bash[update-motd]', :delayed
 end
 
 if node[:phpfpm][:version] == '73'
   yum_package 'liblzf' do
     action [:install, :upgrade]
-    options "--enablerepo=epel --disablerepo=amzn-main"
+    # options "--enablerepo=epel --disablerepo=amzn-main"
     notifies :run, 'bash[update-motd]', :delayed
   end
+end
+
+amzn2_extras node[:phpfpm][:amzn2_extras] do
+  action :install
+  exclusive_extras node[:phpfpm][:exclusive_extras]
 end
 
 if node[:phpfpm][:version] >= '72'
