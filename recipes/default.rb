@@ -44,7 +44,7 @@ end
 
 
 # install mysql
-# include_recipe 'amimoto::mysql'
+include_recipe 'amimoto::mysql'
 
 # install nginx
 include_recipe 'amimoto::nginx'

@@ -26,7 +26,7 @@ def to_mysql_bytes(str)
 end
 
 def restart_mysql_with_flush_ib_logfiles
-  service "mysql" do
+  systemd_unit 'mysqld.service' do
     action :stop
   end
 
@@ -36,7 +36,7 @@ def restart_mysql_with_flush_ib_logfiles
     end
   end
 
-  service "mysql" do
+  systemd_unit 'mysqld.service' do
     action :start
   end
 end

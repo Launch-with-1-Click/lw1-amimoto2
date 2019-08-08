@@ -54,10 +54,10 @@ default[:monit][:settings][:processes] = [
    ]
   },
   {
-   :name => 'mysql',
+   :name => 'mysqld',
    :pidfile => '/var/run/mysqld/mysqld.pid',
-   :start => '/sbin/service mysql start',
-   :stop  => '/sbin/service mysql stop',
+   :start => '/sbin/service mysqld start',
+   :stop  => '/sbin/service mysqld stop',
    :user  => node[:mysql][:config][:user],
    :group => node[:mysql][:config][:group],
    :rules => [

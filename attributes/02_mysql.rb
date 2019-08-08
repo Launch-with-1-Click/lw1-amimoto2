@@ -1,12 +1,10 @@
 ## MySQL
 default[:mysql][:enabled] = true
 default[:mysql][:packages] = %w{
-  mariadb
-  mariadb-server
-  mariadb-libs
+  mysql-community-server
   }
 default[:mysql][:service_action] = [:disable, :stop]
-default[:mysql][:service_name] = 'mariadb'
+default[:mysql][:service_name] = 'mysqld'
 if node[:mysql][:enabled]
   default[:mysql][:service_action] = [:enable, :start]
 end
