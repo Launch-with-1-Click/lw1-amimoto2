@@ -38,7 +38,7 @@ template "/etc/logrotate.d/mysql" do
   source "logrotat.d/mysql.erb"
 end
 
-service "mysql" do
+service node[:mysql][:service_name] do
   action node[:mysql][:service_action]
 end
 

@@ -8,6 +8,8 @@ php-pecl-igbinary
   end
 end
 
+amzn2_extras 'redis4.0'
+
 %w[
 jemalloc
 redis

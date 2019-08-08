@@ -44,7 +44,7 @@ end
 
 
 # install mysql
-include_recipe 'amimoto::mysql'
+# include_recipe 'amimoto::mysql'
 
 # install httpd
 include_recipe 'amimoto::httpd'
@@ -69,7 +69,7 @@ if (node[:memory][:total].to_i / 1024) > 1024
 
   # redis install
   if node[:redis][:enabled]
-    # include_recipe 'amimoto::redis'
+    include_recipe 'amimoto::redis'
   end
 end
 

@@ -43,10 +43,11 @@ suites:
     - recipe[amimoto::default]
     # - recipe[amimoto::nginx_default]
     # - recipe[amimoto::wordpress]
-    - recipe[amimoto::report_handler]
   attributes:
     phpfpm:
       version: "73"
+    redis:
+      enabled: true
     wordpress:
       db:
         user_name: kitchen
