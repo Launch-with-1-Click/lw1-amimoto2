@@ -1,17 +1,17 @@
-# Percona
-file '/etc/yum.repos.d/percona-release.repo' do
-  action :delete
-end
-bash 'percona.repo' do
-    not_if 'rpm -qi gpg-pubkey-* | grep Percona'
-    code <<-EOC
-        rpm --import http://www.percona.com/downloads/RPM-GPG-KEY-percona
-    EOC
-end
-template '/etc/yum.repos.d/Percona.repo' do
-  source 'yum/Percona.repo.erb'
-  action :create
-end
+# # Percona
+# file '/etc/yum.repos.d/percona-release.repo' do
+#   action :delete
+# end
+# bash 'percona.repo' do
+#     not_if 'rpm -qi gpg-pubkey-* | grep Percona'
+#     code <<-EOC
+#         rpm --import http://www.percona.com/downloads/RPM-GPG-KEY-percona
+#     EOC
+# end
+# template '/etc/yum.repos.d/Percona.repo' do
+#   source 'yum/Percona.repo.erb'
+#   action :create
+# end
 
 # epel
 template '/etc/yum.repos.d/epel.repo' do
@@ -19,27 +19,27 @@ template '/etc/yum.repos.d/epel.repo' do
   action :create
 end
 
-# remove rpmforge
-file "/etc/yum.repos.d/rpmforge.repo" do
-    action :delete
-end
+# # remove rpmforge
+# file "/etc/yum.repos.d/rpmforge.repo" do
+#     action :delete
+# end
 
-# remi
-bash 'remi.repo' do
-    not_if 'rpm -qi gpg-pubkey-* | grep Remi'
-    code <<-EOC
-        rpm --import http://rpms.famillecollet.com/RPM-GPG-KEY-remi
-    EOC
-end
-template '/etc/yum.repos.d/remi.repo' do
-  source 'yum/remi.repo.erb'
-  action :create
-end
-%w{ remi-php54 remi-php55 remi-php56 remi-php70 remi-php71 remi-php72 remi-php73 }.each do | file_name |
-  file '/etc/yum.repos.d/' + file_name + '.repo' do
-    action :delete
-  end
-end
+# # remi
+# bash 'remi.repo' do
+#     not_if 'rpm -qi gpg-pubkey-* | grep Remi'
+#     code <<-EOC
+#         rpm --import http://rpms.famillecollet.com/RPM-GPG-KEY-remi
+#     EOC
+# end
+# template '/etc/yum.repos.d/remi.repo' do
+#   source 'yum/remi.repo.erb'
+#   action :create
+# end
+# %w{ remi-php54 remi-php55 remi-php56 remi-php70 remi-php71 remi-php72 remi-php73 }.each do | file_name |
+#   file '/etc/yum.repos.d/' + file_name + '.repo' do
+#     action :delete
+#   end
+# end
 
 
 # amimoto-nginx-mainline

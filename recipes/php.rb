@@ -69,13 +69,6 @@ if node[:phpfpm][:enabled]
 end
 
 # php-fpm start
-
-if node[:phpfpm][:enabled]
-  service 'hhvm' do
-    action [:stop, :disable]
-  end
-end
-
 service "php-fpm" do
   action node[:phpfpm][:service_action]
 end

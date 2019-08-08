@@ -37,10 +37,12 @@ verifier:
 suites:
 - name: amimoto
   run_list:
+    - recipe[amimoto::repos]
     - recipe[amimoto::nginx]
+    - recipe[amimoto::update-motd]
     - recipe[amimoto::default]
-    - recipe[amimoto::nginx_default]
-    - recipe[amimoto::wordpress]
+    # - recipe[amimoto::nginx_default]
+    # - recipe[amimoto::wordpress]
     - recipe[amimoto::report_handler]
   attributes:
     phpfpm:

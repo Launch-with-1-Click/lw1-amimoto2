@@ -5,7 +5,6 @@ default[:monit][:config][:alert] = []
 default[:monit][:monitor] = {
   'nginx'     => node[:nginx][:enabled],
   'httpd'     => node[:httpd][:enabled] || node[:mod_php7][:enabled],
-  'hhvm'      => node[:hhvm][:enabled],
   'php-fpm'   => node[:phpfpm][:enabled],
   'mysql'     => node[:mysql][:enabled],
   'memcached' => node[:memcached][:enabled],
@@ -16,7 +15,6 @@ default[:monit][:monitor] = {
 default[:monit][:source] = {
   'nginx'     => 'monit/nginx.erb',
   'httpd'     => 'monit/process_monitor.erb',
-  'hhvm'      => 'monit/process_monitor.erb',
   'php-fpm'   => 'monit/php-fpm.erb',
   'mysql'     => 'monit/process_monitor.erb',
   'memcached' => 'monit/process_monitor.erb',
@@ -42,16 +40,6 @@ default[:monit][:settings][:processes] = [
    :stop  => '/sbin/service httpd stop',
    :user  => node[:nginx][:config][:user],
    :group => node[:nginx][:config][:group],
-   :rules => [
-   ]
-  },
-  {
-   :name => 'hhvm',
-   :pidfile => '/var/tmp/hhvm.pid ',
-   :start => '/sbin/service hhvm start',
-   :stop  => '/sbin/service hhvm stop',
-   :user  => node[:php][:config][:user],
-   :group => node[:php][:config][:group],
    :rules => [
    ]
   },

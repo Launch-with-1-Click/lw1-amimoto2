@@ -28,27 +28,9 @@ if node[:mod_php7][:enabled]
   force_default[:httpd][:config][:keep_alive_timeout] = 120
 end
 
-## hhvm
-default[:hhvm][:enabled] = false
-default[:hhvm][:service_action] = [:disable, :stop]
-if node[:hhvm][:enabled]
-  default[:hhvm][:service_action] = [:enable, :start]
-end
-default[:hhvm][:config][:user] = node[:web][:user]
-default[:hhvm][:config][:group] = node[:web][:group]
-default[:hhvm][:config][:listen] = '9001'
-default[:hhvm][:config][:file_socket] = '/var/tmp/hiphop-php.sock'
-if node[:hhvm][:enabled]
-  default[:nginx][:config][:php_upstream] = 'unix:/var/tmp/hiphop-php.sock'
-end
-
-
 ## PHP
 default[:phpfpm][:enabled] = true
-default[:phpfpm][:version] = '56'
-if node[:hhvm][:enabled]
-  default[:phpfpm][:enabled] = false
-end
+default[:phpfpm][:version] = '73'
 default[:phpfpm][:service_action] = [:disable, :stop]
 if node[:phpfpm][:enabled]
   default[:phpfpm][:service_action] = [:enable, :start]

@@ -55,15 +55,11 @@ include_recipe 'amimoto::nginx'
 #include_recipe 'amimoto::nginx_default'
 
 # install php
-if node[:hhvm][:enabled]
-  include_recipe 'amimoto::hhvm'
-else
-  if node[:mod_php7][:enabled]
-    include_recipe 'amimoto::mod_php7'
-  else
-    include_recipe 'amimoto::php'
-  end
-end
+# if node[:mod_php7][:enabled]
+#   include_recipe 'amimoto::mod_php7'
+# else
+#   include_recipe 'amimoto::php'
+# end
 
 if (node[:memory][:total].to_i / 1024) > 1024
   # memcached install
@@ -73,7 +69,7 @@ if (node[:memory][:total].to_i / 1024) > 1024
 
   # redis install
   if node[:redis][:enabled]
-    include_recipe 'amimoto::redis'
+    # include_recipe 'amimoto::redis'
   end
 end
 

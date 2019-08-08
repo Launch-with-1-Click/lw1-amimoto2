@@ -1,11 +1,12 @@
 ## MySQL
 default[:mysql][:enabled] = true
 default[:mysql][:packages] = %w{
-  Percona-Server-server-56
-  Percona-Server-client-56
-  Percona-Server-shared-56
+  mariadb
+  mariadb-server
+  mariadb-libs
   }
 default[:mysql][:service_action] = [:disable, :stop]
+default[:mysql][:service_name] = 'mariadb'
 if node[:mysql][:enabled]
   default[:mysql][:service_action] = [:enable, :start]
 end
