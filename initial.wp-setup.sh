@@ -87,14 +87,14 @@ AMIMOTO_JSON='/opt/local/amimoto.json'
 
 chef_solo='/opt/chef/bin/chef-solo'
 [ -f /usr/bin/chef-solo ] && \
-  chef_solo='/usr/bin/chef-solo'
+  chef_solo='/usr/bin/chef-solo --chef-license accept-silent'
 
 cat << EOS > /opt/local/provision
 #!/bin/bash
 /sbin/service monit stop
 [ -f /usr/bin/python2.7 ] && /usr/sbin/alternatives --set python /usr/bin/python2.7
 /usr/bin/git -C ${AMIMOTO_COOKBOOK_PATH} pull origin ${AMIMOTO_BRANCH}
-${chef_solo} --chef-license accept -c /opt/local/solo.rb -j ${AMIMOTO_JSON} -l error
+${chef_solo} -c /opt/local/solo.rb -j ${AMIMOTO_JSON} -l error
 EOS
 chmod +x /opt/local/provision
 
