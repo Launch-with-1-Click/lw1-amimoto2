@@ -1,0 +1,32 @@
+ServerTokens OS
+Timeout 60
+KeepAlive On
+MaxKeepAliveRequests <%= @max_keep_alive_requests %>
+KeepAliveTimeout <%= @keep_alive_timeout %>
+HostnameLookups Off
+ServerSignature On
+
+<Directory "<%= node[:wordpress][:document_root] %>">
+    DirectoryIndex index.html index.htm index.php
+    Options -Indexes +FollowSymLinks
+    AllowOverride <%= @allow_override %>
+    Require all granted
+</Directory>
+
+<IfModule prefork.c>
+StartServers      <%= node[:nginx][:config][:upstream_keepalive].to_i + 2 %>
+MinSpareServers   <%= node[:nginx][:config][:upstream_keepalive].to_i + 2 %>
+MaxSpareServers   <%= node[:nginx][:config][:upstream_keepalive].to_i + 2 %>
+ServerLimit       <%= node[:nginx][:config][:upstream_keepalive].to_i + 2 %>
+MaxClients        <%= node[:nginx][:config][:upstream_keepalive].to_i + 2 %>
+MaxRequestsPerChild <%= @max_requests_per_child %>
+</IfModule>
+
+<IfModule worker.c>
+StartServers         4
+MaxClients         300
+MinSpareThreads     25
+MaxSpareThreads     75
+ThreadsPerChild     25
+MaxRequestsPerChild  0
+</IfModule>

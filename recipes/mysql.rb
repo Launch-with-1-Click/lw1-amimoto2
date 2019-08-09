@@ -1,12 +1,5 @@
 # MySQL Install
 
-# 5.7: http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
-# 8.0: http://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
-
-rpm_package 'mysql57-community-release' do
-  source 'http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm'
-end
-
 yum_package 'mariadb-libs' do
   action [:remove]
 end

@@ -6,6 +6,15 @@ template "/etc/yum.repos.d/amimoto-nginx-mainline.repo" do
   source "yum/amimoto-nginx-mainline.repo.erb"
 end
 
+# MySQL
+# 5.7: http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
+# 8.0: http://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+
+rpm_package 'mysql57-community-release' do
+  source 'http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm'
+end
+
+
 # RHEL
 if %w(redhat).include?(node[:platform])
   # nginx
@@ -28,3 +37,4 @@ if %w(redhat).include?(node[:platform])
     action :create
   end
 end
+
