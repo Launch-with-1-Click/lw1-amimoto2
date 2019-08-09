@@ -32,7 +32,7 @@ end
   end
 end
 
-%W{welcome.conf manual.conf}.each do |file_name|
+%W{ welcome.conf userdir.conf }.each do |file_name|
   file "/etc/httpd/conf.d/" + file_name do
     action :delete
   end

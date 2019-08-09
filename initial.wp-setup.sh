@@ -94,7 +94,7 @@ cat << EOS > /opt/local/provision
 /sbin/service monit stop
 [ -f /usr/bin/python2.7 ] && /usr/sbin/alternatives --set python /usr/bin/python2.7
 /usr/bin/git -C ${AMIMOTO_COOKBOOK_PATH} pull origin ${AMIMOTO_BRANCH}
-${chef_solo} -c /opt/local/solo.rb -j ${AMIMOTO_JSON} -l error
+${chef_solo} --chef-license accept -c /opt/local/solo.rb -j ${AMIMOTO_JSON} -l error
 EOS
 chmod +x /opt/local/provision
 
