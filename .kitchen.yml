@@ -42,8 +42,8 @@ suites:
     - recipe[amimoto::nginx]
     - recipe[amimoto::update-motd]
     - recipe[amimoto::default]
-    # - recipe[amimoto::nginx_default]
-    # - recipe[amimoto::wordpress]
+    - recipe[amimoto::nginx_default]
+    - recipe[amimoto::wordpress]
   attributes:
     phpfpm:
       version: "73"

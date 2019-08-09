@@ -1,18 +1,18 @@
 #!/bin/sh
 nginx_ver=`rpm -q --qf '%{version}' nginx`
 <% if @mod_php7 %>
-mod_php_ver=`rpm -q --qf '%{version}' php70-php`
+mod_php_ver=`rpm -q --qf '%{version}' php`
 <% else %>
 php_ver=`rpm -q --qf '%{version}' php`
 <% end %>
-mysql_ver=`rpm -q --qf '%{version}' Percona-Server-server-56`
+mysql_ver=`rpm -q --qf '%{version}' mysql-community-server`
 
 cat << EOF
 
 <% if @mod_php7 %>
- Nginx ${nginx_ver}, MOD_PHP ${mod_php_ver}, Percona MySQL ${mysql_ver}, $(/usr/local/bin/wp --allow-root --version)
+ Nginx ${nginx_ver}, MOD_PHP ${mod_php_ver}, MySQL-Community-Server ${mysql_ver}, $(/usr/local/bin/wp --allow-root --version)
 <% else %>
- Nginx ${nginx_ver}, PHP ${php_ver}, Percona MySQL ${mysql_ver}, $(/usr/local/bin/wp --allow-root --version)
+ Nginx ${nginx_ver}, PHP ${php_ver}, MySQL-Community-Server ${mysql_ver}, $(/usr/local/bin/wp --allow-root --version)
 <% end %>
 
  amimoto     https://www.amimoto-ami.com/

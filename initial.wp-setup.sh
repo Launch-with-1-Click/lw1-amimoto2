@@ -1,5 +1,5 @@
 #!/bin/bash
-AMIMOTO_BRANCH='2016.01'
+AMIMOTO_BRANCH='2019.07'
 
 INSTANCETYPE=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-type)
 INSTANCEID=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-id)

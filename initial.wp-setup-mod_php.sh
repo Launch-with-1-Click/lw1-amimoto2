@@ -1,5 +1,5 @@
 #!/bin/bash
-AMIMOTO_BRANCH='2016.01'
+AMIMOTO_BRANCH='2019.07'
 
 hash jq  || /usr/bin/yum -y install jq
 
@@ -15,4 +15,4 @@ TMP_JSON=$(mktemp)
   > ${TMP_JSON}
 [ -f ${TMP_JSON} ] && mv -f ${TMP_JSON} /opt/local/amimoto.json
 
-/usr/bin/curl -L -s https://raw.githubusercontent.com/Launch-with-1-Click/lw1-amimoto/${AMIMOTO_BRANCH}/initial.wp-setup.sh | /bin/bash
+/usr/bin/curl -L -s https://raw.githubusercontent.com/Launch-with-1-Click/lw1-amimoto2/${AMIMOTO_BRANCH}/initial.wp-setup.sh | /bin/bash

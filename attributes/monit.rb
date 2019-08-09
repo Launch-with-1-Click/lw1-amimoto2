@@ -54,7 +54,7 @@ default[:monit][:settings][:processes] = [
    ]
   },
   {
-   :name => 'mysqld',
+   :name => 'mysql',
    :pidfile => '/var/run/mysqld/mysqld.pid',
    :start => '/sbin/service mysqld start',
    :stop  => '/sbin/service mysqld stop',
