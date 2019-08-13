@@ -36,6 +36,7 @@ node[:php][:packages].each do | pkg |
   if ! ( node[:phpfpm][:version] >= '72' && pkg == 'php-mcrypt' )
     yum_package pkg do
       action [:install, :upgrade]
+      flush_cache [ :before ]
       options "--skip-broken"
       notifies :run, 'bash[update-motd]', :delayed
       retries 2
