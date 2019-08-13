@@ -37,6 +37,10 @@ action_class do
     end
 
     founds = lines.select {|l| l.split[1] == new_resource.name }
+    if founds.length == 0
+      # case "php7.x=latest"
+      founds = lines.select {|l| l.split[1] =~ %r{^#{new_resource.name}=} }
+    end
     if founds.length > 1
       found_extras = founds.map {|ex| ex.split[1]}
       raise ::Chef::Exceptions::MultipleIdentityError, "#{new_resource.name} matches #{found_extras}"
