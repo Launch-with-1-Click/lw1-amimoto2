@@ -25,7 +25,7 @@ amzn2_extras node[:phpfpm][:amzn2_extras] do
   exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
 end
 
-packages = node[:php][:packages]
+packages = node[:php][:packages].dup
 
 if node[:phpfpm][:version] >= '72'
   package 'php-mcrypt' do
