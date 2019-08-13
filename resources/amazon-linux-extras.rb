@@ -19,6 +19,7 @@ action :install do
   end
 
   execute "amazon-linux-extras install -y #{new_resource.name}"
+  execute "yum clean all"
 end
 
 
