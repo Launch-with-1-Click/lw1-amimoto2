@@ -22,6 +22,7 @@ end
 amzn2_extras node[:phpfpm][:amzn2_extras] do
   action :install
   exclusive_extras node[:phpfpm][:exclusive_extras]
+  exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
 end
 
 if node[:phpfpm][:version] >= '72'

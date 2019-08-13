@@ -32,6 +32,7 @@ end
 default[:phpfpm][:enabled] = true
 default[:phpfpm][:version] = '73'
 extra_php_versions = ['php7.1', 'php7.2', 'php7.3']
+default[:phpfpm][:exclusive_pkgs] = ['php', 'php-common']
 case node[:phpfpm][:version]
 when '73'
   default[:phpfpm][:amzn2_extras] = 'php7.3'
