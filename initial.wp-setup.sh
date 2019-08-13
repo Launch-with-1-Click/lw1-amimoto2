@@ -16,7 +16,7 @@ hash git || /usr/bin/yum -y install git
 hash jq  || /usr/bin/yum -y install jq
 
 /sbin/service monit stop
-/sbin/service mysql stop
+/sbin/service mysqld stop
 /sbin/service php-fpm stop
 /sbin/service nginx stop
 /sbin/service httpd stop

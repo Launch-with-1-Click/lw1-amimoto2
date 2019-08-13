@@ -9,11 +9,12 @@ symbolic-links=0
 character-set-server = utf8
 explicit_defaults_for_timestamp=1
 default-storage-engine=InnoDB
+default_password_lifetime=0
 
 innodb_strict_mode
 innodb_file_per_table
-innodb_file_format = <%= @innodb_file_format %>
-innodb_file_format_max = <%= @innodb_file_format_max %>
+# innodb_file_format = <%= @innodb_file_format %>
+# innodb_file_format_max = <%= @innodb_file_format_max %>
 # innodb_use_sys_malloc
 innodb_buffer_pool_size=<%= @innodb_buffer_pool_size %>
 innodb_write_io_threads = 4
