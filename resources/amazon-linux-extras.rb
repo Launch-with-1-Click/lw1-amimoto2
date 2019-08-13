@@ -51,9 +51,11 @@ action_class do
 
   def remove_pkgs(pkgs)
     execute "yum remove -y #{pkgs.join(' ')}"
+    execute "yum clean all"
   end
 
   def disable_extra(extra)
     execute "amazon-linux-extras disable #{extra}"
+    execute "yum clean all"
   end
 end
