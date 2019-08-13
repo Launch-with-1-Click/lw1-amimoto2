@@ -25,24 +25,24 @@ amzn2_extras node[:phpfpm][:amzn2_extras] do
   exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
 end
 
+packages = node[:php][:packages]
+
 if node[:phpfpm][:version] >= '72'
   package 'php-mcrypt' do
     action [:remove]
     notifies :run, 'bash[update-motd]', :delayed
   end
+  packages.delete('php-mcrypt')
 end
 
-node[:php][:packages].each do | pkg |
-  if ! ( node[:phpfpm][:version] >= '72' && pkg == 'php-mcrypt' )
-    yum_package pkg do
-      action [:install, :upgrade]
-      flush_cache [ :before ]
-      options "--skip-broken"
-      notifies :run, 'bash[update-motd]', :delayed
-      retries 2
-      retry_delay 4
-    end
-  end
+yum_package 'php-packages' do
+  package_name packages
+  action [:install, :upgrade]
+  flush_cache [ :before ]
+  options "--skip-broken"
+  notifies :run, 'bash[update-motd]', :delayed
+  retries 2
+  retry_delay 4
 end
 
 # configure php
