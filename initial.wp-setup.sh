@@ -5,6 +5,7 @@ INSTANCETYPE=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance
 INSTANCEID=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-id)
 AZ=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone/)
 PUBLIC_IPV4=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/public-ipv4/)
+LOCAL_IPV4=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/local-ipv4/)
 
 SERVERNAME=${INSTANCEID}
 
@@ -174,8 +175,13 @@ WP_CLI="sudo -u nginx /usr/local/bin/wp"
 
 cd /var/www/vhosts/${SERVERNAME}
 if ! $WP_CLI core is-installed ; then
+  if echo $PUBLIC_IPV4 | grep "Not Found" > /dev/null ; then
+    WP_URL=${LOCAL_IPV4}
+  else
+    WP_URL=${PUBLIC_IPV4}
+  fi
   $WP_CLI core install \
-    --url="http://${PUBLIC_IPV4}" \
+    --url="http://${WP_URL}" \
     --title="AMIMOTO WordPress" \
     --admin_user="admin" \
     --admin_email="admin@example.com" \
