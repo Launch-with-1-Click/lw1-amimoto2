@@ -36,7 +36,7 @@ verifier:
   name: shell
 
 suites:
-- name: amimoto
+- name: base
   run_list:
     - recipe[amimoto::repos]
     - recipe[amimoto::nginx]
@@ -47,6 +47,22 @@ suites:
   attributes:
     phpfpm:
       version: "73"
+    redis:
+      enabled: true
+    wordpress:
+      db:
+        user_name: kitchen
+- name: modphp
+  run_list:
+    - recipe[amimoto::repos]
+    - recipe[amimoto::nginx]
+    - recipe[amimoto::update-motd]
+    - recipe[amimoto::default]
+    - recipe[amimoto::nginx_default]
+    - recipe[amimoto::wordpress]
+  attributes:
+    mod_php7:
+      enabled: true
     redis:
       enabled: true
     wordpress:

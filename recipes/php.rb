@@ -7,14 +7,12 @@ end
 # php install
 yum_package 'libwebp' do
   action [:install, :upgrade]
-  # options "--enablerepo=epel --disablerepo=amzn-main"
   notifies :run, 'bash[update-motd]', :delayed
 end
 
 if node[:phpfpm][:version] == '73'
   yum_package 'liblzf' do
     action [:install, :upgrade]
-    # options "--enablerepo=epel --disablerepo=amzn-main"
     notifies :run, 'bash[update-motd]', :delayed
   end
 end
@@ -54,6 +52,10 @@ end
     notifies :reload, 'service[php-fpm]'
   end
 end
+
+# file '/etc/httpd/conf.d/php.conf' do
+#   action :delete
+# end
 
 %w{ /var/tmp/php /var/tmp/php/session /var/log/php-fpm }.each do | dir_name |
   directory dir_name do

@@ -9,20 +9,51 @@ end
 
 yum_package 'libwebp' do
   action [:install, :upgrade]
-  options '--enablerepo=epel --disablerepo=amzn-main'
   notifies :run, 'bash[update-motd]', :delayed
 end
 
-node[:mod_php7][:packages].each do | pkg |
-  yum_package pkg do
+if node[:phpfpm][:version] == '73'
+  yum_package 'liblzf' do
     action [:install, :upgrade]
     notifies :run, 'bash[update-motd]', :delayed
   end
 end
 
-file '/etc/httpd/conf.d/php.conf' do
-  action :delete
+amzn2_extras node[:phpfpm][:amzn2_extras] do
+  action :install
+  exclusive_extras node[:phpfpm][:exclusive_extras]
+  exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
 end
+
+packages = node[:php][:packages].dup
+
+if node[:phpfpm][:version] >= '72'
+  package 'php-mcrypt' do
+    action [:remove]
+    notifies :run, 'bash[update-motd]', :delayed
+  end
+  packages.delete('php-mcrypt')
+end
+
+yum_package 'php-packages' do
+  package_name packages
+  action [:install, :upgrade]
+  flush_cache [ :before ]
+  options "--skip-broken"
+  notifies :run, 'bash[update-motd]', :delayed
+  retries 2
+  retry_delay 4
+end
+
+# file '/etc/httpd/conf.d/php.conf' do
+#   action :delete
+# end
+
+template '/etc/httpd/conf.d/php.conf' do
+  source 'httpd/conf.d/php.conf.erb'
+  notifies :reload, 'service[httpd]'
+end
+
 
 # configure php
 
@@ -32,15 +63,6 @@ end
     source "php/" + file_name + ".erb"
     notifies :reload, 'service[httpd]'
   end
-end
-
-execute 'backup default php70.ini' do
-  command "cp /etc/opt/remi/php70/php.ini /etc/opt/remi/php70/php.ini.rpmdefault"
-  creates "/etc/opt/remi/php70/php.ini.rpmdefault"
-end
-
-link '/etc/opt/remi/php70/php.ini' do
-  to '/etc/php.ini'
 end
 
 %w{ /var/tmp/php /var/tmp/php/session /var/log/php-fpm }.each do | dir_name |

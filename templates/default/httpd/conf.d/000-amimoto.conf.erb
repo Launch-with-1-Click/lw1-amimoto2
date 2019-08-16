@@ -19,12 +19,14 @@ MinSpareServers   <%= node[:nginx][:config][:upstream_keepalive].to_i + 2 %>
 MaxSpareServers   <%= node[:nginx][:config][:upstream_keepalive].to_i + 2 %>
 ServerLimit       <%= node[:nginx][:config][:upstream_keepalive].to_i + 2 %>
 MaxClients        <%= node[:nginx][:config][:upstream_keepalive].to_i + 2 %>
+MaxRequestWorkers <%= node[:nginx][:config][:upstream_keepalive].to_i + 2 %>
 MaxRequestsPerChild <%= @max_requests_per_child %>
 </IfModule>
 
 <IfModule worker.c>
 StartServers         4
 MaxClients         300
+MaxRequestWorkers  300
 MinSpareThreads     25
 MaxSpareThreads     75
 ThreadsPerChild     25
