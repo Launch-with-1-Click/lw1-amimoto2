@@ -4,6 +4,7 @@ AMIMOTO_BRANCH='2019.07'
 INSTANCETYPE=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-type)
 INSTANCEID=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-id)
 AZ=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone/)
+PUBLIC_IPV4=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/public-ipv4/)
 
 SERVERNAME=${INSTANCEID}
 
@@ -166,3 +167,18 @@ fi
 #/usr/bin/wget https://app.deepsecurity.trendmicro.com:443/software/agent/amzn1/x86_64/ -O /tmp/agent.rpm --no-check-certificate --quiet
 #/bin/rpm -ihv /tmp/agent.rpm || /bin/rpm -Uhv /tmp/agent.rpm
 #/bin/rm -rf /tmp/agent.rpm
+
+## install wordpress
+
+WP_CLI="sudo -u nginx /usr/local/bin/wp"
+
+cd /var/www/vhosts/${SERVERNAME}
+if ! $WP_CLI core is-installed ; then
+  $WP_CLI core install \
+    --url="http://${PUBLIC_IPV4}" \
+    --title="AMIMOTO WordPress" \
+    --admin_user="admin" \
+    --admin_email="admin@example.com" \
+    --admin_password="${SERVERNAME}" \
+    --skip-email
+fi
