@@ -7,7 +7,6 @@ end
 # php install
 yum_package 'libwebp' do
   action [:install, :upgrade]
-  notifies :run, 'bash[update-motd]', :delayed
 end
 
 if node[:phpfpm][:version] == '73'

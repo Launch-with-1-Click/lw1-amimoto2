@@ -12,6 +12,7 @@ end
 
 bash "update-motd" do
   action :nothing
+  path ['/sbin', '/bin', '/usr/sbin', '/usr/bin']
   user "root"
   cwd "/tmp"
   code <<-EOH
