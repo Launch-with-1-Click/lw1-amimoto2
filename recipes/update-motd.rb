@@ -12,7 +12,7 @@ end
 
 bash "update-motd" do
   action :nothing
-  path ['/sbin', '/bin', '/usr/sbin', '/usr/bin']
+  environment 'PATH' => "/sbin:/bin:/usr/sbin:/usr/bin#{ENV['PATH']}"
   user "root"
   cwd "/tmp"
   code <<-EOH
