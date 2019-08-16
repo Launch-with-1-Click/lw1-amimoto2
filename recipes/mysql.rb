@@ -21,9 +21,7 @@ template "/etc/my.cnf" do
   notifies :reload_or_restart, 'systemd_unit[mysqld.service]' unless node.run_state[:mysql_flush_ib_logfiles]
 end
 
-# sudo -u mysql mysqld --initialize-insecure
-# sudo -u mysql mysqld --no-defaults --initialize-insecure
-execute 'mysqld --no-defaults --initialize-insecure' do
+execute '/sbin/mysqld --no-defaults --initialize-insecure' do
   user 'mysql'
   not_if 'test -d /var/lib/mysql/mysql'
 end

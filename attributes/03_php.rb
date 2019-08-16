@@ -1,16 +1,3 @@
-### mod_php7
-default[:mod_php7][:enabled] = false
-if node[:mod_php7][:enabled]
-  force_default[:httpd][:enabled] = true
-  force_default[:httpd][:service_action] = [:enable, :start]
-  force_default[:httpd][:config][:listen] = '8080'
-  force_default[:httpd][:config][:allow_override] = 'ALL'
-  force_default[:nginx][:config][:backend_upstream] = '127.0.0.1:8080'
-  force_default[:phpfpm][:enabled] = false
-  force_default[:phpfpm][:service_action] = [:disable, :stop]
-  force_default[:httpd][:config][:keep_alive_timeout] = 120
-end
-
 ## PHP
 default[:phpfpm][:enabled] = true
 default[:phpfpm][:version] = '73'
@@ -35,6 +22,20 @@ default[:phpfpm][:service_action] = [:disable, :stop]
 if node[:phpfpm][:enabled]
   default[:phpfpm][:service_action] = [:enable, :start]
 end
+
+### mod_php7
+default[:mod_php7][:enabled] = false
+if node[:mod_php7][:enabled]
+  force_default[:httpd][:enabled] = true
+  force_default[:httpd][:service_action] = [:enable, :start]
+  force_default[:httpd][:config][:listen] = '8080'
+  force_default[:httpd][:config][:allow_override] = 'ALL'
+  force_default[:nginx][:config][:backend_upstream] = '127.0.0.1:8080'
+  force_default[:phpfpm][:enabled] = false
+  force_default[:phpfpm][:service_action] = [:disable, :stop]
+  force_default[:httpd][:config][:keep_alive_timeout] = 120
+end
+
 
 default[:php][:packages] = %w{
   php
