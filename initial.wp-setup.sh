@@ -1,5 +1,6 @@
 #!/bin/bash
 AMIMOTO_BRANCH='2019.07'
+PATH=/sbin:/bin:$PATH
 
 INSTANCETYPE=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-type)
 INSTANCEID=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-id)
