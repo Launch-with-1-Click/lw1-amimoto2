@@ -115,10 +115,6 @@ http {
         server <%= @backend_upstream %>;
         keepalive <%= @upstream_keepalive %>;
     }
-
-    upstream install-check {
-        server <%= node[:mod_php7][:install_checker] %>;
-    }
     <% end %>
 
     include /etc/nginx/conf.d/*.conf;

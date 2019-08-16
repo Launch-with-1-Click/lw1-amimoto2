@@ -1,6 +1,5 @@
 ### mod_php7
 default[:mod_php7][:enabled] = false
-default[:mod_php7][:install_checker] = '127.0.0.1:8081'
 if node[:mod_php7][:enabled]
   force_default[:httpd][:enabled] = true
   force_default[:httpd][:service_action] = [:enable, :start]

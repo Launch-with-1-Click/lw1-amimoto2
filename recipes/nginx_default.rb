@@ -31,23 +31,6 @@ if node[:nginx][:http2_enable]
   end
 end
 
-%W{ /opt/local/amimoto /opt/local/amimoto/wp-admin #{node[:wordpress][:document_root]} }.each do | dir_name |
-  directory dir_name do
-    owner node[:nginx][:config][:user]
-    group node[:nginx][:config][:group]
-    mode 00775
-    recursive true
-    action :create
-  end
-end
-
-template "/opt/local/amimoto/wp-admin/install.php" do
-  variables(
-    :instance_id => node[:ec2][:instance_id]
-  )
-  source "install.php.erb"
-end
-
 service "nginx" do
   action node[:nginx][:service_action]
 end

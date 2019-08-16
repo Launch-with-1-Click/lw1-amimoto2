@@ -20,16 +20,6 @@ include_recipe 'amimoto::wpcli'
   end
 end
 
-template "/opt/local/amimoto/wp-admin/install.php" do
-  owner node[:nginx][:config][:user]
-  group node[:nginx][:config][:group]
-  mode 00755
-  variables(
-    :instance_id => node[:ec2][:instance_id]
-  )
-  source "install.php.erb"
-end
-
 # config files
 %w{ drop mobile-detect phpmyadmin php-fpm wp-front wp-multisite-subdir wp-singlesite }.each do | file_name |
   template "/etc/nginx/" + file_name do
