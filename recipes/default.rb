@@ -19,7 +19,7 @@ if node[:virtualization][:system] != 'docker'
   #end
 end
 
-%w{ zip unzip wget git openssl bash amazon-efs-utils }.each do | pkg |
+%w{ zip unzip wget git openssl bash amazon-efs-utils certbot }.each do | pkg |
   package pkg do
     action [:install, :upgrade]
     notifies :run, 'bash[update-motd]', :delayed
