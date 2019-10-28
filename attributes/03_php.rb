@@ -85,6 +85,6 @@ default[:php][:config][:post_max_size] = node[:php][:config][:upload_max_filesiz
 default[:php][:config][:request_terminate_timeout] = node[:nginx][:config][:proxy_read_timeout]
 default[:php][:config][:max_execution_time] = node[:nginx][:config][:proxy_read_timeout]
 default[:php][:config][:session_save_hundler] = 'files'
-default[:php][:config][:session_save_path] = '/var/tmp/php/session'
+default[:php][:config][:session_save_path] = '/tmp'
 default[:php][:config][:sendmail_path] = '/usr/sbin/sendmail -t -i'
 default[:php][:config][:limit_extensions] = '.php'
