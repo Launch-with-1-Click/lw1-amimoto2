@@ -117,4 +117,10 @@ end
 
 service "nginx" do
   action node[:nginx][:service_action]
+  only_if lazy{ File.exist?('/etc/rc.d/init.d/nginx') }
+end
+
+systemd_unit 'nginx.service' do
+  action node[:mysql][:service_action]
+  not_if lazy{ File.exist?('/etc/rc.d/init.d/nginx') }
 end
