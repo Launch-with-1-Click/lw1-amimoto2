@@ -117,10 +117,10 @@ end
 
 service "nginx" do
   action node[:nginx][:service_action]
-  not_if { File.exist?('/usr/lib/systemd/system/nginx.service') }
+  not_if { ::File.exist?('/usr/lib/systemd/system/nginx.service') }
 end
 
 systemd_unit 'nginx.service' do
   action node[:mysql][:service_action]
-  only_if { File.exist?('/usr/lib/systemd/system/nginx.service') }
+  only_if { ::File.exist?('/usr/lib/systemd/system/nginx.service') }
 end
