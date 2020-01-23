@@ -86,10 +86,20 @@ end
 
 # php-fpm stop, disable
 
-service "httpd" do
+file '/usr/lib/systemd/system/httpd.service.d/php-fpm.conf' do
+  action :delete
+  notifies :reload_or_try_restart, 'systemd_unit[httpd]'
+end
+
+file '/usr/lib/systemd/system/nginx.service.d/php-fpm.conf' do
+  action :delete
+  notifies :reload_or_try_restart, 'systemd_unit[nginx]'
+end
+
+systemd_unit "httpd" do
   action node[:httpd][:service_action]
 end
 
-service "php-fpm" do
-  action node[:phpfpm][:service_action]
+systemd_unit "php-fpm" do
+  action [:stop, :disable]
 end
