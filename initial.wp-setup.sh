@@ -173,8 +173,14 @@ fi
 ## install wordpress
 
 WP_CLI="sudo -u nginx /usr/local/bin/wp"
+DOCROOT=$(jq -r .wordpress.document_root < /opt/local/amimoto.json)
 
-cd /var/www/vhosts/${SERVERNAME}
+# jq returns null when missing json path
+if [ "$DOCROOT" == "null" ] ; then
+  DOCROOT=/var/www/vhosts/${SERVERNAME}
+fi
+
+cd $DOCROOT
 if ! $WP_CLI core is-installed ; then
   if echo $PUBLIC_IPV4 | grep "Not Found" > /dev/null ; then
     WP_URL=${LOCAL_IPV4}
