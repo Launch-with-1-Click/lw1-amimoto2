@@ -31,6 +31,7 @@ default[:monit][:settings][:processes] = [
    :user  => node[:nginx][:config][:user],
    :group => node[:nginx][:config][:group],
    :rules => [
+     'if failed port 80 protocol http then restart'
    ]
   },
   {
