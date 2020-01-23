@@ -52,14 +52,12 @@ end
 # install mysql
 include_recipe 'amimoto::mysql'
 
-# install nginx
-include_recipe 'amimoto::nginx'
-#include_recipe 'amimoto::nginx_default'
-
-# install php
+# install webserver and php
 if node[:mod_php7][:enabled]
   include_recipe 'amimoto::mod_php7'
 else
+  include_recipe 'amimoto::nginx'
+  # install nginx
   include_recipe 'amimoto::php'
 end
 
