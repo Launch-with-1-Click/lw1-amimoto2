@@ -1,7 +1,8 @@
 # nginx install
 node[:nginx][:packages].each do | pkg |
-  package pkg do
+  yum_package pkg do
     action [:install, :upgrade]
+    options ['--disablerepo=*', '--enablerepo=amimoto-nginx-mainline']
     notifies :run, 'bash[update-motd]', :delayed
   end
 end
