@@ -88,12 +88,16 @@ end
 
 file '/usr/lib/systemd/system/httpd.service.d/php-fpm.conf' do
   action :delete
-  notifies :reload_or_try_restart, 'systemd_unit[httpd]'
+  if node.run_context.resource_collection.map(&:to_s).include?('systemd_unit[httpd]')
+    notifies :reload_or_try_restart, 'systemd_unit[httpd]'
+  end
 end
 
 file '/usr/lib/systemd/system/nginx.service.d/php-fpm.conf' do
   action :delete
-  notifies :reload_or_try_restart, 'systemd_unit[nginx]'
+  if node.run_context.resource_collection.map(&:to_s).include?('systemd_unit[nginx]')
+    notifies :reload_or_try_restart, 'systemd_unit[nginx]'
+  end
 end
 
 systemd_unit "httpd" do
