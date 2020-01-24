@@ -174,10 +174,16 @@ fi
 
 WP_CLI="sudo -u nginx /usr/local/bin/wp"
 DOCROOT=$(jq -r .wordpress.document_root < /opt/local/amimoto.json)
+IS_JINKEI=$(jq -r .wordpress.jinkei_cf < /opt/local/amimoto.json)
 
 # jq returns null when missing json path
 if [ "$DOCROOT" == "null" ] ; then
   DOCROOT=/var/www/vhosts/${SERVERNAME}
+fi
+
+# exit if cloudformation
+if [ "$IS_JINKEI" != "null" ] ; then
+  exit 0
 fi
 
 cd $DOCROOT
