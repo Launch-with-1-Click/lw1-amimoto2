@@ -8,7 +8,7 @@ template "/etc/sysconfig/clock" do
 		:timezone => node[:timezone]
 	)
 	mode '0644'
-	not_if {File.exist?("/etc/sysconfig/clock")}
+	action [:create_if_missing]
 end
 ruby_block 'clock rewrite' do
 	block do
