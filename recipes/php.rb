@@ -30,6 +30,11 @@ if node[:phpfpm][:version] >= '72'
     notifies :run, 'bash[update-motd]', :delayed
   end
   packages.delete('php-mcrypt')
+  package 'php-pecl-zip' do
+    action [:remove]
+    notifies :run, 'bash[update-motd]', :delayed
+  end
+  packages.delete('php-pecl-zip')
 end
 
 yum_package 'php-packages' do
