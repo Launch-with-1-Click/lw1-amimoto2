@@ -50,6 +50,9 @@ default[:nginx][:config][:expires_js] = '30d'
 default[:nginx][:config][:expires_pdf] = 'max'
 default[:nginx][:config][:expires_flash] = '30d'
 default[:nginx][:config][:expires_woff] = 'max'
+default[:nginx][:config][:expires_ttf] = 'max'
+default[:nginx][:config][:expires_otf] = 'max'
+default[:nginx][:config][:expires_eot] = 'max'
 default[:nginx][:config][:abuse_ua_blocking] = false
 
 default[:nginx][:config][:vpc_ips] = %w{
