@@ -8,14 +8,27 @@ end
 
 ## redis
 default[:redis][:enabled] = false
+default[:redis][:version] = '6'
 default[:redis][:service_action] = [:disable, :stop]
 if node[:redis][:enabled]
   default[:redis][:service_action] = [:enable, :start]
 end
+extra_redis_versions = ['redis4.0', 'redis6']
+default[:redis][:exclusive_pkgs] = ['redis']
+case node[:redis][:version]
+when '4.0'
+  default[:redis][:amzn2_extras] = 'redis4.0'
+  extra_redis_versions.delete(node[:redis][:amzn2_extras])
+  default[:redis][:exclusive_extras] = extra_redis_versions
+when '6'
+  default[:redis][:amzn2_extras] = 'redis6'
+  extra_redis_versions.delete(node[:redis][:amzn2_extras])
+  default[:redis][:exclusive_extras] = extra_redis_versions
+end
 
 ## goofys
 default[:goofys][:install] = false
-default[:goofys][:version] = '0.19.0'
+default[:goofys][:version] = '0.24.0'
 default[:goofys][:packages] = %w{
   golang
   fuse

@@ -8,7 +8,11 @@ php-pecl-igbinary
   end
 end
 
-amzn2_extras 'redis6'
+amzn2_extras node[:redis][:amzn2_extras] do
+  action :install
+  exclusive_extras node[:redis][:exclusive_extras]
+  exclusive_pkgs node[:redis][:exclusive_pkgs]
+end
 
 %w[
 jemalloc

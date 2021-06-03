@@ -23,8 +23,6 @@ location / {
     try_files $uri $uri/ /index.php$is_args$args;
 }
 
-rewrite /wp-admin$ $request_uri/ permanent;
-
 rewrite /files/$ /index.php last;
 
 set $cachetest "$document_root/wp-content/cache/ms-filemap/${host}${uri}";
@@ -40,9 +38,8 @@ if ($uri !~ wp-content/plugins) {
 }
 
 if (!-e $request_filename) {
-    rewrite ^/[_0-9a-zA-Z-]+(/wp-.*) $1 last;
-    rewrite ^/[_0-9a-zA-Z-]+.*(/wp-admin/.*\.php)$ $1 last;
-    rewrite ^/[_0-9a-zA-Z-]+(/.*\.php)$ $1 last;
+    rewrite ^(/[^/]+)?(/wp-.*) $2 last;
+    rewrite ^(/[^/]+)?(/.*\.php) $2 last;
 }
 
 location ~ \.php$ {
