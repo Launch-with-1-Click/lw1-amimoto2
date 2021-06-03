@@ -8,7 +8,7 @@ php-pecl-igbinary
   end
 end
 
-amzn2_extras 'redis4.0'
+amzn2_extras 'redis6'
 
 %w[
 jemalloc
