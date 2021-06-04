@@ -24,6 +24,13 @@ redis
   end
 end
 
+# configure redis
+template "/etc/my.cnf" do
+  variables node[:redis][:config]
+  source "redis/redis.conf.erb"
+  notifies :reload_or_restart, 'systemd_unit[redis.service]'
+end
+
 service 'redis' do
   action node[:redis][:service_action]
 end

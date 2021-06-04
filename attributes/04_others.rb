@@ -25,6 +25,7 @@ when '6'
   extra_redis_versions.delete(node[:redis][:amzn2_extras])
   default[:redis][:exclusive_extras] = extra_redis_versions
 end
+default[:redis][:config][:bind] = '* -::*'
 
 ## goofys
 default[:goofys][:install] = false
