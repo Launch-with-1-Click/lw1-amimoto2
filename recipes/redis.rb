@@ -31,6 +31,10 @@ template "/etc/redis/redis.conf" do
   notifies :reload_or_restart, 'systemd_unit[redis.service]'
 end
 
+systemd_unit 'redis.service' do
+  action node[:redis][:service_action]
+end
+
 service 'redis' do
   action node[:redis][:service_action]
 end
