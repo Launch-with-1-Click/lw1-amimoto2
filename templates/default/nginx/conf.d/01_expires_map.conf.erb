@@ -4,7 +4,7 @@ map $sent_http_content_type $expires {
     ~audio/                  <%= @expires_audio %>;
     ~video/                  <%= @expires_video %>;
     ~font/                   <%= @expires_woff %>;
-    ~application/xfont-      <%= @expires_woff %>;
+    ~application/x-font-     <%= @expires_woff %>;
     text/css                 <%= @expires_css %>;
     text/javascript          <%= @expires_js %>;
     application/javascript   <%= @expires_js %>;
