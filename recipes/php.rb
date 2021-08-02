@@ -25,16 +25,24 @@ end
 packages = node[:php][:packages].dup
 
 if node[:phpfpm][:version] >= '72'
-  package 'php-mcrypt' do
+  %w[
+  php-mcrypt
+  php-pecl-zip
+  ].map do |pkg|
+    package pkg do
+      action [:remove]
+      notifies :run, 'bash[update-motd]', :delayed
+    end
+    packages.delete(pkg)
+  end
+end
+
+if node[:phpfpm][:version] >= '80'
+  package 'php-pecl-redis' do
     action [:remove]
     notifies :run, 'bash[update-motd]', :delayed
   end
-  packages.delete('php-mcrypt')
-  package 'php-pecl-zip' do
-    action [:remove]
-    notifies :run, 'bash[update-motd]', :delayed
-  end
-  packages.delete('php-pecl-zip')
+  packages.delete('php-pecl-redis')
 end
 
 yum_package 'php-packages' do

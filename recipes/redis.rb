@@ -1,7 +1,7 @@
-if node[:phpfpm][:version] >= '74'
-  include_recipe 'amimoto::pecl-redis-from-yum'
-else
+if node[:phpfpm][:version] >= '80'
   include_recipe 'amimoto::pecl-redis'
+else
+  include_recipe 'amimoto::pecl-redis-from-yum'
 end
 
 amzn2_extras node[:redis][:amzn2_extras] do
