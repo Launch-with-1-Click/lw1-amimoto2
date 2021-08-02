@@ -1,11 +1,7 @@
-%w[
-php-pecl-redis
-php-pecl-igbinary
-].map do |pkg|
-  package pkg do
-    action [:install, :upgrade]
-    notifies :run, 'bash[update-motd]', :delayed
-  end
+if node[:phpfpm][:version] >= '80'
+  include_recipe 'amimoto::pecl-redis'
+else
+  include_recipe 'amimoto::pecl-redis-from-yum'
 end
 
 amzn2_extras node[:redis][:amzn2_extras] do

@@ -1,9 +1,13 @@
 ## PHP
 default[:phpfpm][:enabled] = true
-default[:phpfpm][:version] = '73'
-extra_php_versions = ['php7.1', 'php7.2', 'php7.3', 'php7.4']
+default[:phpfpm][:version] = '74'
+extra_php_versions = ['php7.1', 'php7.2', 'php7.3', 'php7.4', 'php8.0']
 default[:phpfpm][:exclusive_pkgs] = ['php', 'php-common']
 case node[:phpfpm][:version]
+when '80'
+  default[:phpfpm][:amzn2_extras] = 'php8.0'
+  extra_php_versions.delete(node[:phpfpm][:amzn2_extras])
+  default[:phpfpm][:exclusive_extras] = extra_php_versions
 when '74'
   default[:phpfpm][:amzn2_extras] = 'php7.4'
   extra_php_versions.delete(node[:phpfpm][:amzn2_extras])
