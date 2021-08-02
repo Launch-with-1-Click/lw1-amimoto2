@@ -122,6 +122,6 @@ service "nginx" do
 end
 
 systemd_unit 'nginx.service' do
-  action node[:mysql][:service_action]
+  action node[:nginx][:service_action]
   only_if { ::File.exist?('/usr/lib/systemd/system/nginx.service.d') }
 end
