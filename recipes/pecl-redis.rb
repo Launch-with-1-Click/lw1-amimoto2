@@ -3,15 +3,15 @@ bash 'pecl-igbinary' do
     code <<-EOH
         pecl install igbinary
     EOH
-    notifies :create, "template[/etc/php.d/21-igbinary.ini]"
+    notifies :create, "template[/etc/php.d/40-igbinary.ini]"
   
     subscribes :run, 'yum_package[php-cli]', :delayed
     subscribes :run, 'amzn2_extras[php8.0]', :delayed
 end
   
-template "/etc/php.d/21-igbinary.ini" do
+template "/etc/php.d/40-igbinary.ini" do
     action :nothing
-    source "php/php.d/21-igbinary.ini.erb"
+    source "php/php.d/40-igbinary.ini.erb"
 end
   
 bash 'pecl-redis' do
@@ -19,14 +19,14 @@ bash 'pecl-redis' do
     code <<-EOH
         pecl install -D 'enable-redis-igbinary="yes" enable-redis-lzf="no" enable-redis-zstd="no"' redis
     EOH
-    notifies :create, "template[/etc/php.d/21-redis.ini]"
+    notifies :create, "template[/etc/php.d/50-redis.ini]"
   
     subscribes :run, 'yum_package[php-cli]', :delayed
     subscribes :run, 'amzn2_extras[php8.0]', :delayed
 end
   
-template "/etc/php.d/21-redis.ini" do
+template "/etc/php.d/50-redis.ini" do
     action :nothing
-    source "php/php.d/21-redis.ini.erb"
+    source "php/php.d/50-redis.ini.erb"
 end
   
