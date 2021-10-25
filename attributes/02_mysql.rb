@@ -2,6 +2,10 @@
 default[:mysql][:enabled] = true
 default[:mysql][:packages] = %w{
   mysql-community-server
+  mysql-community-client
+  mysql-community-common
+  mysql-community-libs
+  mysql-community-libs-compat
   }
 default[:mysql][:service_action] = [:disable, :stop]
 default[:mysql][:service_name] = 'mysqld'
