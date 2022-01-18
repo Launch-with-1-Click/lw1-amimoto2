@@ -7,6 +7,7 @@ end
 node[:mysql][:packages].each do |package_name|
   yum_package package_name do
     action [:install, :upgrade]
+    options "--nogpgcheck"
     if ['redhat'].include?(node[:platform])
       flush_cache [:before]
     end
