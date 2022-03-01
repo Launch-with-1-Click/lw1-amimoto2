@@ -7,13 +7,27 @@ template "/etc/yum.repos.d/amimoto-nginx-mainline.repo" do
 end
 
 # MySQL
-# 5.7: http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
-# 8.0: http://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+# 5.7: http://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+# 8.0: http://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
 
 rpm_package 'mysql57-community-release' do
-  source 'http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm'
+  source 'http://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm'
+  not_if { ::File.exist?('/etc/pki/rpm-gpg/RPM-GPG-KEY-mysql-2022') }
 end
 
+rpm_package 'mysql80-community-release' do
+  source 'http://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm'
+  only_if { ::File.exist?('/etc/pki/rpm-gpg/RPM-GPG-KEY-mysql-2022') }
+  notifies :run, "bash[modify_mysql_version]", :immediately
+end
+
+bash "modify_mysql_version" do
+  action :nothing
+  code <<-EOH
+    yum-config-manager --disable mysql80-community
+    yum-config-manager --enable mysql57-community
+  EOH
+end
 
 # RHEL
 if %w(redhat).include?(node[:platform])
