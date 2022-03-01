@@ -18,7 +18,7 @@ end
 rpm_package 'mysql80-community-release' do
   source 'http://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm'
   only_if { ::File.exist?('/etc/pki/rpm-gpg/RPM-GPG-KEY-mysql-2022') }
-  notifies run, "bash[modify_mysql_version]", :immediately
+  notifies :run, "bash[modify_mysql_version]", :immediately
 end
 
 bash "modify_mysql_version" do
