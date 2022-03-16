@@ -74,7 +74,12 @@ echo $index_html > /var/www/html/index.html
 
 
 ## git pull AMIMOTO cookbook
+CHEF_REPO_PATH='/opt/local/chef-repo'
 AMIMOTO_COOKBOOK_PATH='/opt/local/chef-repo/cookbooks/amimoto/'
+
+### force set remote protocol
+/usr/bin/git -C ${CHEF_REPO_PATH} remote set-url origin https://github.com/amimoto-ami/chef-repo.git
+/usr/bin/git -C ${AMIMOTO_COOKBOOK_PATH} remote set-url origin https://github.com/Launch-with-1-Click/lw1-amimoto2.git
 
 /usr/bin/git -C ${AMIMOTO_COOKBOOK_PATH} fetch origin || \
   /usr/bin/git -C ${AMIMOTO_COOKBOOK_PATH} fetch mirror
