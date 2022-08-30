@@ -5,7 +5,7 @@ check process <%= @name %>
   matching "<%= @name %>"
 <% end %>
   start program = "<%= @start %>"
-  stop program = "<%= @stop %>"
+  stop program = "<%= @stop %> || /usr/bin/kill $(/usr/bin/ps aux | /usr/bin/grep 'nginx: master' | /usr/bin/head -n 1 | /usr/bin/awk '{print $2}')"
 <% @rules.each do |rule| %>
   <%= rule %>
 <% end %>
