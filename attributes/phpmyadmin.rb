@@ -1,6 +1,6 @@
 require 'securerandom'
 
-default[:phpmyadmin][:version] = "5.0.4"
+default[:phpmyadmin][:version] = "5.2.0"
 default[:phpmyadmin][:blowfish_secret] = SecureRandom.hex(16)
 default[:phpmyadmin][:servers] = [
   {
