@@ -1,5 +1,5 @@
 ## memcached
-default[:memcached][:enabled] = true
+default[:memcached][:enabled] = false
 default[:memcached][:service_action] = [:disable, :stop]
 if node[:memcached][:enabled]
   default[:memcached][:service_action] = [:enable, :start]
