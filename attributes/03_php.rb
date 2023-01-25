@@ -53,7 +53,6 @@ default[:php][:packages] = %w{
   php
   php-cli
   php-fpm
-  php-devel
   php-mbstring
   php-gd
   php-pear
@@ -65,7 +64,6 @@ default[:php][:packages] = %w{
   php-opcache
   php-pear
   php-bcmath
-  ImageMagick
   }
 if node[:phpfpm][:version] < '72'
   default[:php][:packages].push('php-mcrypt')

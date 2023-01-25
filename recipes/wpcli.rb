@@ -1,7 +1,15 @@
 # install jq
-%w{ jq }.each do | pkg |
-  package pkg do
+if node[:phpfpm][:version] >= '80'
+  package 'jq' do
     action [:install, :upgrade]
+  end
+else
+  package 'jq' do
+    action [:install, :upgrade]
+    options [
+      "--disablerepo=*",
+      "--enablerepo=epel"
+    ]
   end
 end
 

@@ -5,13 +5,12 @@ group node[:php][:config][:group] do
 end
 
 # php install
-%w{ 'libwebp' 'ImageMagick' }.each do | pkg_name |
+%w{ libwebp ImageMagick }.each do | pkg_name |
   yum_package pkg_name do
     action [:install, :upgrade]
     notifies :run, 'bash[update-motd]', :delayed
   end
 end
-
 
 php_version = node[:phpfpm][:version]
 php_install_option = ['--skip-broken']
@@ -36,6 +35,7 @@ if node[:phpfpm][:version] >= '80'
 else
   amzn2_extras node[:phpfpm][:amzn2_extras] do
     action :disable
+    only_if "amazon-linux-extras | grep 'enabled' | grep 'php'"
     exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
   end
 
@@ -63,13 +63,16 @@ else
     EOC
     action :nothing
   end
-  yum_package 'oniguruma5php' do
-    action [:install, :upgrade]
-    options [
-      "--disablerepo=*",
-      "--enablerepo=epel,remi,remi-php#{php_version}"
-    ]
-    notifies :run, 'bash[update-motd]', :delayed
+
+  %w{ oniguruma oniguruma5php jq }.each do | pkg_name |
+    yum_package pkg_name do
+      action [:install, :upgrade]
+      options [
+        "--disablerepo=*",
+        "--enablerepo=epel,remi,remi-php#{php_version}"
+      ]
+      notifies :run, 'bash[update-motd]', :delayed
+    end
   end
 
   if node[:phpfpm][:version] >= '72'
