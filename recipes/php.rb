@@ -5,13 +5,11 @@ group node[:php][:config][:group] do
 end
 
 # php install
-yum_package 'libwebp' do
-  action [:install, :upgrade]
-  notifies :run, 'bash[update-motd]', :delayed
-end
-yum_package 'ImageMagick' do
-  action [:install, :upgrade]
-  notifies :run, 'bash[update-motd]', :delayed
+%w{ libwebp ImageMagick }.each do | pkg_name |
+  yum_package pkg_name do
+    action [:install, :upgrade]
+    notifies :run, 'bash[update-motd]', :delayed
+  end
 end
 
 php_version = node[:phpfpm][:version]
@@ -37,6 +35,7 @@ if node[:phpfpm][:version] >= '80'
 else
   amzn2_extras node[:phpfpm][:amzn2_extras] do
     action :disable
+    only_if "amazon-linux-extras | grep 'enabled' | grep 'php'"
     exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
   end
 
@@ -55,12 +54,25 @@ else
   rpm_package "remi-release" do
     source "#{Chef::Config[:file_cache_path]}/remi-release-7.rpm"
     action :nothing
+    notifies :run, "bash[remi-enable]", :immediately
   end
-  bash 'enable_repo' do
+  bash 'remi-enable' do
     user 'root'
     code <<-EOC
       yum-config-manager --enable remi-php#{php_version}
     EOC
+    action :nothing
+  end
+
+  %w{ oniguruma oniguruma5php jq }.each do | pkg_name |
+    yum_package pkg_name do
+      action [:install, :upgrade]
+      options [
+        "--disablerepo=*",
+        "--enablerepo=epel,remi,remi-php#{php_version}"
+      ]
+      notifies :run, 'bash[update-motd]', :delayed
+    end
   end
 
   if node[:phpfpm][:version] >= '72'
@@ -78,7 +90,7 @@ else
   php_install_option = [
     "--skip-broken",
     "--disablerepo=*",
-    "--enablerepo=remi-php#{php_version}"
+    "--enablerepo=epel,remi,remi-php#{php_version}"
   ]
 end
 
