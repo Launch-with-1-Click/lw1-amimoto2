@@ -36,6 +36,7 @@ else
     amzn2_extras extra do
       action :disable
       only_if "amazon-linux-extras | grep 'enabled' | grep -q '#{extra}'"
+      exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
     end
   end
   amzn2_extras node[:phpfpm][:amzn2_extras] do
@@ -73,7 +74,7 @@ else
       action [:install, :upgrade]
       options [
         "--disablerepo=*",
-        "--enablerepo=epel,remi,remi-php#{node[:phpfpm][:version]}"
+        "--enablerepo=epel,remi-php#{node[:phpfpm][:version]}"
       ]
       notifies :run, 'bash[update-motd]', :delayed
     end
@@ -92,7 +93,7 @@ else
   php_install_option = [
     "--skip-broken",
     "--disablerepo=*",
-    "--enablerepo=epel,remi,remi-php#{node[:phpfpm][:version]}"
+    "--enablerepo=epel,remi-php#{node[:phpfpm][:version]}"
   ]
 end
 
