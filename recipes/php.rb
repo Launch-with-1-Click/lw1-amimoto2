@@ -36,6 +36,7 @@ else
     amzn2_extras extra do
       action :disable
       only_if "amazon-linux-extras | grep 'enabled' | grep -q '#{extra}'"
+      exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
     end
   end
   amzn2_extras node[:phpfpm][:amzn2_extras] do

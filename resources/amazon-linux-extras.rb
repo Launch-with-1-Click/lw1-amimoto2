@@ -23,7 +23,10 @@ action :install do
 end
 
 action :disable do
-  disable_extra(new_resource.name)
+  if current_state  == 'enabled'
+    remove_pkgs(new_resource.exclusive_pkgs) if new_resource.exclusive_pkgs.any?
+    disable_extra(new_resource.name)
+  end
 end
 
 action_class do
