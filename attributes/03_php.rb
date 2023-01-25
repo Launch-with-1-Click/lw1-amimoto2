@@ -2,7 +2,7 @@
 default[:phpfpm][:enabled] = true
 default[:phpfpm][:version] = '80'
 extra_php_versions = ['php7.1', 'php7.2', 'php7.3', 'php7.4', 'php8.0', 'php8.1']
-default[:phpfpm][:exclusive_pkgs] = ['php', 'php-common']
+default[:phpfpm][:exclusive_pkgs] = ['php', 'php-common', 'jq', 'oniguruma']
 case node[:phpfpm][:version]
 when '81'
   default[:phpfpm][:amzn2_extras] = 'php8.1'
