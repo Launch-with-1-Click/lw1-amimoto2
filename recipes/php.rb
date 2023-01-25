@@ -74,7 +74,7 @@ else
       action [:install, :upgrade]
       options [
         "--disablerepo=*",
-        "--enablerepo=epel,remi,remi-php#{node[:phpfpm][:version]}"
+        "--enablerepo=epel,remi-php#{node[:phpfpm][:version]}"
       ]
       notifies :run, 'bash[update-motd]', :delayed
     end
@@ -93,7 +93,7 @@ else
   php_install_option = [
     "--skip-broken",
     "--disablerepo=*",
-    "--enablerepo=epel,remi,remi-php#{node[:phpfpm][:version]}"
+    "--enablerepo=epel,remi-php#{node[:phpfpm][:version]}"
   ]
 end
 
