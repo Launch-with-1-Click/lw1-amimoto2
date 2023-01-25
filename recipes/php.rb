@@ -12,7 +12,6 @@ end
   end
 end
 
-php_version = node[:phpfpm][:version]
 php_install_option = ['--skip-broken']
 packages = node[:php][:packages].dup
 if node[:phpfpm][:version] >= '80'
@@ -33,10 +32,15 @@ if node[:phpfpm][:version] >= '80'
   ]
   
 else
+  node[:phpfpm][:exclusive_extras].each do | extra |
+    amzn2_extras extra do
+      action :disable
+      only_if "amazon-linux-extras | grep 'enabled' | grep -q '#{extra}'"
+    end
+  end
   amzn2_extras node[:phpfpm][:amzn2_extras] do
     action :disable
-    only_if "amazon-linux-extras | grep 'enabled' | grep -q 'php7'"
-    exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
+    only_if "amazon-linux-extras | grep 'enabled' | grep -q '#{node[:phpfpm][:amzn2_extras]}'"
   end
 
   yum_package 'harfbuzz' do
@@ -59,7 +63,7 @@ else
   bash 'remi-enable' do
     user 'root'
     code <<-EOC
-      yum-config-manager --enable remi-php#{php_version}
+      yum-config-manager --enable remi-php#{node[:phpfpm][:version]}
     EOC
     action :nothing
   end
@@ -69,7 +73,7 @@ else
       action [:install, :upgrade]
       options [
         "--disablerepo=*",
-        "--enablerepo=epel,remi,remi-php#{php_version}"
+        "--enablerepo=epel,remi,remi-php#{node[:phpfpm][:version]}"
       ]
       notifies :run, 'bash[update-motd]', :delayed
     end
@@ -88,7 +92,7 @@ else
   php_install_option = [
     "--skip-broken",
     "--disablerepo=*",
-    "--enablerepo=epel,remi,remi-php#{php_version}"
+    "--enablerepo=epel,remi,remi-php#{node[:phpfpm][:version]}"
   ]
 end
 
@@ -97,6 +101,7 @@ yum_package 'php-packages' do
   action [:install, :upgrade]
   flush_cache [ :before ]
   options php_install_option
+  notifies :reload, 'service[php-fpm]'
   notifies :run, 'bash[update-motd]', :delayed
   retries 2
   retry_delay 4

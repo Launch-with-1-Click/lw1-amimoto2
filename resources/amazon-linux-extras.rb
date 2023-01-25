@@ -23,11 +23,7 @@ action :install do
 end
 
 action :disable do
-  remove_pkgs(new_resource.exclusive_pkgs) if new_resource.exclusive_pkgs.any?
-  new_resource.exclusive_extras.each do |extra|
-    disable_extra(extra)
-  end
-  execute "yum clean all"
+  disable_extra(new_resource.name)
 end
 
 action_class do
