@@ -35,6 +35,11 @@ if node[:phpfpm][:version] >= '80'
   ]
   
 else
+  amzn2_extras node[:phpfpm][:amzn2_extras] do
+    action :disable
+    exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
+  end
+
   yum_package 'harfbuzz' do
     action [:install, :upgrade]
     notifies :run, 'bash[update-motd]', :delayed
