@@ -24,7 +24,7 @@ end
 
 action :disable do
   if current_state  == 'enabled'
-    remove_pkgs(new_resource.exclusive_pkgs)
+    remove_pkgs(new_resource.exclusive_pkgs) if new_resource.exclusive_pkgs.any?
     disable_extra(new_resource.name)
   end
 end

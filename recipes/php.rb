@@ -62,22 +62,22 @@ else
   rpm_package "remi-release" do
     source "#{Chef::Config[:file_cache_path]}/remi-release-7.rpm"
     action :nothing
-    notifies :run, "bash[remi-enable]", :immediately
   end
   bash 'remi-enable' do
     user 'root'
     code <<-EOC
       yum-config-manager --enable remi-php#{node[:phpfpm][:version]}
     EOC
-    action :nothing
   end
 
-  yum_package 'harfbuzz' do
-    action [:install, :upgrade]
-    notifies :run, 'bash[update-motd]', :delayed
+  %w{ harfbuzz libwebp ImageMagick }.each do | pkg_name |
+    yum_package pkg_name do
+      action [:install, :upgrade]
+      notifies :run, 'bash[update-motd]', :delayed
+    end
   end
 
-  %w{ oniguruma oniguruma5php libwebp ImageMagick jq }.each do | pkg_name |
+  %w{ oniguruma oniguruma5php jq }.each do | pkg_name |
     yum_package pkg_name do
       action [:install, :upgrade]
       options [
