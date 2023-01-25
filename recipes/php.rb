@@ -62,12 +62,14 @@ else
   rpm_package "remi-release" do
     source "#{Chef::Config[:file_cache_path]}/remi-release-7.rpm"
     action :nothing
+    notifies :run, 'bash[remi-enable]', :delayed
   end
   bash 'remi-enable' do
     user 'root'
     code <<-EOC
       yum-config-manager --enable remi-php#{node[:phpfpm][:version]}
     EOC
+    action :nothing
   end
 
   %w{ harfbuzz libwebp ImageMagick }.each do | pkg_name |
