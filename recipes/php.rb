@@ -5,13 +5,6 @@ group node[:php][:config][:group] do
 end
 
 # php install
-%w{ libwebp ImageMagick }.each do | pkg_name |
-  yum_package pkg_name do
-    action [:install, :upgrade]
-    notifies :run, 'bash[update-motd]', :delayed
-  end
-end
-
 php_install_option = ['--skip-broken']
 packages = node[:php][:packages].dup
 if node[:phpfpm][:version] >= '80'
@@ -21,16 +14,23 @@ if node[:phpfpm][:version] >= '80'
     exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
   end
 
+  php_install_option = [
+    "--skip-broken"
+  ]
+  
+  %w{ libwebp ImageMagick }.each do | pkg_name |
+    yum_package pkg_name do
+      action [:install, :upgrade]
+      notifies :run, 'bash[update-motd]', :delayed
+    end
+  end
+  
   package 'php-pecl-redis' do
     action [:remove]
     notifies :run, 'bash[update-motd]', :delayed
   end
   packages.delete('php-pecl-redis')
 
-  php_install_option = [
-    "--skip-broken"
-  ]
-  
 else
   node[:phpfpm][:exclusive_extras].each do | extra |
     amzn2_extras extra do
@@ -42,12 +42,15 @@ else
   amzn2_extras node[:phpfpm][:amzn2_extras] do
     action :disable
     only_if "amazon-linux-extras | grep 'enabled' | grep -q '#{node[:phpfpm][:amzn2_extras]}'"
+    exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
   end
 
-  yum_package 'harfbuzz' do
-    action [:install, :upgrade]
-    notifies :run, 'bash[update-motd]', :delayed
-  end
+
+  php_install_option = [
+    "--skip-broken",
+    "--disablerepo=*",
+    "--enablerepo=epel,remi-php#{node[:phpfpm][:version]}"
+  ]
 
   remote_file "#{Chef::Config[:file_cache_path]}/remi-release-7.rpm" do
     source "http://rpms.remirepo.net/enterprise/remi-release-7.rpm"
@@ -69,12 +72,17 @@ else
     action :nothing
   end
 
-  %w{ oniguruma oniguruma5php jq }.each do | pkg_name |
+  yum_package 'harfbuzz' do
+    action [:install, :upgrade]
+    notifies :run, 'bash[update-motd]', :delayed
+  end
+
+  %w{ oniguruma oniguruma5php libwebp ImageMagick jq }.each do | pkg_name |
     yum_package pkg_name do
       action [:install, :upgrade]
       options [
         "--disablerepo=*",
-        "--enablerepo=epel,remi-php#{node[:phpfpm][:version]}"
+        "--enablerepo=epel,remi,remi-php#{node[:phpfpm][:version]}"
       ]
       notifies :run, 'bash[update-motd]', :delayed
     end
@@ -89,12 +97,6 @@ else
       packages.delete(pkg_name)
     end
   end
-
-  php_install_option = [
-    "--skip-broken",
-    "--disablerepo=*",
-    "--enablerepo=epel,remi-php#{node[:phpfpm][:version]}"
-  ]
 end
 
 yum_package 'php-packages' do
