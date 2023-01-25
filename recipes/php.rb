@@ -35,7 +35,7 @@ if node[:phpfpm][:version] >= '80'
 else
   amzn2_extras node[:phpfpm][:amzn2_extras] do
     action :disable
-    only_if "amazon-linux-extras | grep 'enabled' | grep 'php'"
+    only_if "amazon-linux-extras | grep 'enabled' | grep -q 'php7'"
     exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
   end
 
@@ -76,17 +76,15 @@ else
   end
 
   if node[:phpfpm][:version] >= '72'
-    %w[
-    php-mcrypt
-    php-pecl-zip
-    ].map do |pkg|
-      package pkg do
+    %w{ php-mcrypt php-pecl-zip }.each do | pkg_name |
+      yum_package pkg_name do
         action [:remove]
         notifies :run, 'bash[update-motd]', :delayed
       end
-      packages.delete(pkg)
+      packages.delete(pkg_name)
     end
   end
+
   php_install_option = [
     "--skip-broken",
     "--disablerepo=*",
