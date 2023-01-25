@@ -78,7 +78,7 @@ else
     end
   end
 
-  %w{ oniguruma oniguruma5php jq }.each do | pkg_name |
+  %w{ oniguruma oniguruma5php gd3php libicu71 jq }.each do | pkg_name |
     yum_package pkg_name do
       action [:install, :upgrade]
       options [
