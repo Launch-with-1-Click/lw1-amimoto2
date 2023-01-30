@@ -5,33 +5,35 @@ group node[:php][:config][:group] do
 end
 
 # php install
+yum_package 'libs' do
+  package_name [
+    "libwebp",
+    "ImageMagick",
+  ]
+  action [:install, :upgrade]
+  notifies :run, 'bash[update-motd]', :delayed
+end
+
 php_install_option = ['--skip-broken']
 packages = node[:php][:packages].dup
 if node[:phpfpm][:version] >= '80'
+  %w{ php-pecl-redis }.each do | pkg_name |
+    yum_package pkg_name do
+      action [:remove]
+      notifies :run, 'bash[update-motd]', :delayed
+    end
+    packages.delete(pkg_name)
+  end
+
+  # Install From AmazonLinux Extras repo
   amzn2_extras node[:phpfpm][:amzn2_extras] do
     action :install
     exclusive_extras node[:phpfpm][:exclusive_extras]
     exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
   end
 
-  php_install_option = [
-    "--skip-broken"
-  ]
-  
-  %w{ libwebp ImageMagick }.each do | pkg_name |
-    yum_package pkg_name do
-      action [:install, :upgrade]
-      notifies :run, 'bash[update-motd]', :delayed
-    end
-  end
-  
-  package 'php-pecl-redis' do
-    action [:remove]
-    notifies :run, 'bash[update-motd]', :delayed
-  end
-  packages.delete('php-pecl-redis')
-
 else
+  # Disable AmazonLinux Extras repo
   node[:phpfpm][:exclusive_extras].each do | extra |
     amzn2_extras extra do
       action :disable
@@ -45,22 +47,17 @@ else
     exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
   end
 
-
-  php_install_option = [
-    "--skip-broken",
-    "--disablerepo=*",
-    "--enablerepo=epel,remi-php#{node[:phpfpm][:version]}"
-  ]
-
-  remote_file "#{Chef::Config[:file_cache_path]}/remi-release-7.rpm" do
-    source "http://rpms.remirepo.net/enterprise/remi-release-7.rpm"
+  # install remi repos
+  remi_rpm = "remi-release-7.rpm"
+  remote_file "#{Chef::Config[:file_cache_path]}/#{remi_rpm}" do
+    source "http://rpms.remirepo.net/enterprise/#{remi_rpm}"
     #ssl_verify_mode :verify_none
     not_if "rpm -qa | grep -q '^remi'"
     action :create
     notifies :install, "rpm_package[remi-release]", :immediately
   end
   rpm_package "remi-release" do
-    source "#{Chef::Config[:file_cache_path]}/remi-release-7.rpm"
+    source "#{Chef::Config[:file_cache_path]}/#{remi_rpm}"
     action :nothing
   end
   bash 'remi-enable' do
@@ -71,32 +68,37 @@ else
     not_if "yum-config-manager remi-php#{node[:phpfpm][:version]} | grep enabled | grep -q True"
   end
 
-  %w{ harfbuzz libwebp ImageMagick }.each do | pkg_name |
-    yum_package pkg_name do
-      action [:install, :upgrade]
-      notifies :run, 'bash[update-motd]', :delayed
-    end
+  # install libraries
+  yum_package 'harfbuzz' do
+    action [:install, :upgrade]
+    notifies :run, 'bash[update-motd]', :delayed
+  end
+  yum_package 'php-libs' do
+    package_name [
+      "oniguruma", 
+      "oniguruma5php",
+      "gd3php",
+      "libicu71",
+    ]
+    action [:install, :upgrade]
+    options [
+      "--disablerepo=*",
+      "--enablerepo=epel,remi,remi-php#{node[:phpfpm][:version]}"
+    ]
+    notifies :run, 'bash[update-motd]', :delayed
   end
 
-  %w{ oniguruma oniguruma5php gd3php libicu71 jq }.each do | pkg_name |
+  php_install_option.push("--disablerepo=*")
+  php_install_option.push("--enablerepo=epel,remi,remi-php#{node[:phpfpm][:version]}")
+end
+
+if node[:phpfpm][:version] >= '72'
+  %w{ php-mcrypt php-pecl-zip }.each do | pkg_name |
     yum_package pkg_name do
-      action [:install, :upgrade]
-      options [
-        "--disablerepo=*",
-        "--enablerepo=epel,remi,remi-php#{node[:phpfpm][:version]}"
-      ]
+      action [:remove]
       notifies :run, 'bash[update-motd]', :delayed
     end
-  end
-
-  if node[:phpfpm][:version] >= '72'
-    %w{ php-mcrypt php-pecl-zip }.each do | pkg_name |
-      yum_package pkg_name do
-        action [:remove]
-        notifies :run, 'bash[update-motd]', :delayed
-      end
-      packages.delete(pkg_name)
-    end
+    packages.delete(pkg_name)
   end
 end
 
