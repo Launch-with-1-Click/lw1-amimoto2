@@ -84,6 +84,9 @@ end
 if node[:phpfpm][:version] >= '73'
   default[:php][:packages].push('php-intl')
 end
+if node[:phpfpm][:version] >= '80'
+  default[:php][:packages].push('php-devel')
+end
 
 default[:php][:config][:user] = node[:web][:user]
 default[:php][:config][:group] = node[:web][:group]
