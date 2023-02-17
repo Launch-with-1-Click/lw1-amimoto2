@@ -93,7 +93,16 @@ else
 end
 
 if node[:phpfpm][:version] >= '72'
-  %w{ php-mcrypt php-pecl-zip }.each do | pkg_name |
+  %w{ php-mcrypt }.each do | pkg_name |
+    yum_package pkg_name do
+      action [:remove]
+      notifies :run, 'bash[update-motd]', :delayed
+    end
+    packages.delete(pkg_name)
+  end
+end
+if node[:phpfpm][:version] >= '80'
+  %w{ php-pecl-zip }.each do | pkg_name |
     yum_package pkg_name do
       action [:remove]
       notifies :run, 'bash[update-motd]', :delayed
