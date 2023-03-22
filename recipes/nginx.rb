@@ -93,17 +93,10 @@ file "/etc/nginx/modules.d/ngx_http_mruby_module.conf" do
     notifies :restart, 'service[nginx]'
 end
 
-if node[:nginx][:ngx_pagespeed]
-  template "/etc/nginx/modules.d/ngx_pagespeed_module.conf" do
-    #variables node[:nginx][:config]
-    source "nginx/modules.d/ngx_pagespeed_module.conf.erb"
-    notifies :restart, 'service[nginx]'
-  end
-else
-  file "/etc/nginx/modules.d/ngx_pagespeed_module.conf" do
-    action :delete
-    notifies :restart, 'service[nginx]'
-  end
+# remove ngx_pagespeed
+file "/etc/nginx/modules.d/ngx_pagespeed_module.conf" do
+  action :delete
+  notifies :restart, 'service[nginx]'
 end
 
 # update www group
