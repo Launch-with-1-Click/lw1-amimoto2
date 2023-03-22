@@ -12,9 +12,6 @@ end
 if node[:nginx][:ngx_mruby]
   default[:nginx][:packages].push('nginx-mod-ngx_mruby')
 end
-if node[:nginx][:ngx_pagespeed]
-  default[:nginx][:packages].push('nginx-mod-ngx_pagespeed')
-end
 
 default[:nginx][:service_action] = [:disable, :stop]
 if node[:nginx][:enabled]
