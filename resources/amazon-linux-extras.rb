@@ -41,7 +41,13 @@ action_class do
     return lines.first.split[1] if lines.length == 1
 
     if lines.length == 0
-      raise ::Chef::Exceptions::ResourceNotFound, "#{new_resource.name} is not provided by amazon-linux-extra"
+      result = shell_out("amazon-linux-extras info #{new_resource.name}")
+      lines = result.stdout.split("\n")
+      if lines.length == 0
+        raise ::Chef::Exceptions::ResourceNotFound, "#{new_resource.name} is not provided by amazon-linux-extra"
+      else
+        return 'NotInstalled'
+      end
     end
 
     founds = lines.select {|l| l.split[1] == new_resource.name }
