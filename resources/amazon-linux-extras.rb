@@ -8,7 +8,7 @@ load_current_value do
 end
 
 action :install do
-  if current_state  == 'enabled'
+  if current_state  == 'Amazon'
     log 'up to date'
     return
   end
@@ -23,7 +23,7 @@ action :install do
 end
 
 action :disable do
-  if current_state  == 'enabled'
+  if current_state  == 'Amazon'
     remove_pkgs(new_resource.exclusive_pkgs) if new_resource.exclusive_pkgs.any?
     disable_extra(new_resource.name)
   end
@@ -35,9 +35,10 @@ action_class do
   end
 
   def current_state
-    result = shell_out("amazon-linux-extras list | grep #{new_resource.name}")
+    # result = shell_out("amazon-linux-extras list | grep #{new_resource.name}")
+    result = shell_out("yum repolist enabled | grep amzn2extra-#{new_resource.name}")
     lines = result.stdout.split("\n")
-    return lines.first.split[2] if lines.length == 1
+    return lines.first.split[1] if lines.length == 1
 
     if lines.length == 0
       raise ::Chef::Exceptions::ResourceNotFound, "#{new_resource.name} is not provided by amazon-linux-extra"
