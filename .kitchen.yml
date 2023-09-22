@@ -22,7 +22,7 @@ platforms:
 - name: amazon-linux-large-tokyo
   driver:
     instance_type: c5.large
-    image_id: ami-0c3fd0f5d33134a76 # Amazon Linux 2 AMI (HVM), SSD Volume Type
+    image_id: ami-052c9af0c988f8bbd # Amazon Linux 2 AMI (HVM), SSD Volume Type
     region: ap-northeast-1
     availability_zone: c
     tags:
