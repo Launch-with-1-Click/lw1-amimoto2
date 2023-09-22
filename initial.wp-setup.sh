@@ -10,6 +10,13 @@ LOCAL_IPV4=$(/usr/bin/curl -s http://169.254.169.254/latest/meta-data/local-ipv4
 
 SERVERNAME=${INSTANCEID}
 
+# PHP8.1
+TMP_JSON=$(mktemp)
+/usr/bin/jq -s '.[1] * .[0]' \
+  <(echo '{"phpfpm":{"version":"81"}}') \
+  /opt/local/amimoto.json \
+  > ${TMP_JSON}
+[ -f ${TMP_JSON} ] && mv -f ${TMP_JSON} /opt/local/amimoto.json
 
 ## cleanup and initialyze
 [ -f /usr/bin/python2.7 ] && \
