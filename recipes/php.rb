@@ -16,13 +16,22 @@ end
 
 php_install_option = ['--skip-broken']
 packages = node[:php][:packages].dup
-if node[:phpfpm][:version] >= '80'
+if node[:phpfpm][:version] >= '73'
   %w{ php-pecl-redis }.each do | pkg_name |
     yum_package pkg_name do
       action [:remove]
       notifies :run, 'bash[update-motd]', :delayed
     end
     packages.delete(pkg_name)
+  end
+
+  # Disable AmazonLinux Extras repo
+  node[:phpfpm][:exclusive_extras].each do | extra |
+    amzn2_extras extra do
+      action :disable
+      only_if "amazon-linux-extras | grep 'enabled' | grep -q '#{extra}'"
+      exclusive_pkgs node[:phpfpm][:exclusive_pkgs]
+    end
   end
 
   # Install From AmazonLinux Extras repo

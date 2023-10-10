@@ -1,4 +1,4 @@
-if node[:phpfpm][:version] >= '80'
+if node[:phpfpm][:version] >= '73'
   include_recipe 'amimoto::pecl-redis'
 else
   include_recipe 'amimoto::pecl-redis-from-yum'
