@@ -1,5 +1,5 @@
 # install jq
-if node[:phpfpm][:version] >= '80'
+if node[:phpfpm][:version] >= '73'
   package 'jq' do
     action [:install, :upgrade]
   end
