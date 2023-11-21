@@ -391,7 +391,7 @@ when "c1.medium"
   default[:mysql][:config][:tmp_table_size]  = '256M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "c3.large","c4.large","c5.large","c5a.large","c5d.large","c5n.large","c6i.large","c6id.large"
+when "c3.large","c4.large","c5.large","c5a.large","c5d.large","c5n.large","c6i.large","c6id.large","c6a.large"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '2'
 
@@ -408,7 +408,7 @@ when "c3.large","c4.large","c5.large","c5a.large","c5d.large","c5n.large","c6i.l
   default[:mysql][:config][:tmp_table_size]  = '256M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "c1.xlarge","c3.xlarge","c4.xlarge","c5.xlarge","c5a.xlarge","c5d.xlarge","c5n.xlarge","c6i.xlarge","c6id.xlarge"
+when "c1.xlarge","c3.xlarge","c4.xlarge","c5.xlarge","c5a.xlarge","c5d.xlarge","c5n.xlarge","c6i.xlarge","c6id.xlarge","c6a.xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '8'
 
@@ -425,7 +425,7 @@ when "c1.xlarge","c3.xlarge","c4.xlarge","c5.xlarge","c5a.xlarge","c5d.xlarge","
   default[:mysql][:config][:tmp_table_size]  = '256M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "c3.2xlarge","c4.2xlarge","c5.2xlarge","c5a.2xlarge","c5d.2xlarge","c5n.2xlarge","c6i.2xlarge","c6id.2xlarge"
+when "c3.2xlarge","c4.2xlarge","c5.2xlarge","c5a.2xlarge","c5d.2xlarge","c5n.2xlarge","c6i.2xlarge","c6id.2xlarge","c6a.2xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '8'
 
@@ -442,7 +442,7 @@ when "c3.2xlarge","c4.2xlarge","c5.2xlarge","c5a.2xlarge","c5d.2xlarge","c5n.2xl
   default[:mysql][:config][:tmp_table_size]  = '256M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "c3.4xlarge","c4.4xlarge","c5.4xlarge","c5a.4xlarge","c5d.4xlarge","c5n.4xlarge","c6i.4xlarge","c6id.4xlarge"
+when "c3.4xlarge","c4.4xlarge","c5.4xlarge","c5a.4xlarge","c5d.4xlarge","c5n.4xlarge","c6i.4xlarge","c6id.4xlarge","c6a.4xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '8'
 
@@ -459,7 +459,7 @@ when "c3.4xlarge","c4.4xlarge","c5.4xlarge","c5a.4xlarge","c5d.4xlarge","c5n.4xl
   default[:mysql][:config][:tmp_table_size]  = '256M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "c3.8xlarge","c4.8xlarge","c5a.8xlarge","c6i.8xlarge","c6id.8xlarge"
+when "c3.8xlarge","c4.8xlarge","c5a.8xlarge","c6i.8xlarge","c6id.8xlarge","c6a.8xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '32'
 
@@ -493,7 +493,7 @@ when "c5.9xlarge","c5d.9xlarge","c5n.9xlarge"
   default[:mysql][:config][:tmp_table_size]  = '512M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "c5.12xlarge","c5a.12xlarge","c5d.12xlarge","c6i.12xlarge","c6id.12xlarge"
+when "c5.12xlarge","c5a.12xlarge","c5d.12xlarge","c6i.12xlarge","c6id.12xlarge","c6a.12xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '48'
 
@@ -510,7 +510,7 @@ when "c5.12xlarge","c5a.12xlarge","c5d.12xlarge","c6i.12xlarge","c6id.12xlarge"
   default[:mysql][:config][:tmp_table_size]  = '512M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "c5a.16xlarge"
+when "c5a.16xlarge","c6a.16xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '64'
 
@@ -544,7 +544,7 @@ when "c5.18xlarge","c5d.18xlarge","c5n.18xlarge"
   default[:mysql][:config][:tmp_table_size]  = '512M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "c5.24xlarge","c5a.24xlarge","c5d.24xlarge","c6i.24xlarge","c6id.24xlarge"
+when "c5.24xlarge","c5a.24xlarge","c5d.24xlarge","c6i.24xlarge","c6id.24xlarge","c6a.24xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '96'
 
@@ -561,7 +561,7 @@ when "c5.24xlarge","c5a.24xlarge","c5d.24xlarge","c6i.24xlarge","c6id.24xlarge"
   default[:mysql][:config][:tmp_table_size]  = '512M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "c5.metal","c5d.metal","c5n.metal"
+when "c5.metal","c5d.metal","c5n.metal","c6a.metal"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '96'
 
@@ -578,7 +578,7 @@ when "c5.metal","c5d.metal","c5n.metal"
   default[:mysql][:config][:tmp_table_size]  = '512M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "c6i.32xlarge","c6id.32xlarge"
+when "c6i.32xlarge","c6id.32xlarge","c6a.32xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '128'
 
@@ -612,7 +612,7 @@ when "c6i.metal","c6id.metal"
   default[:mysql][:config][:tmp_table_size]  = '1024M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "r3.large","r4.large","r5.large","r5a.large","r5ad.large","r6i.large","r6id.large"
+when "r3.large","r4.large","r5.large","r5a.large","r5ad.large","r6i.large","r6id.large","r6a.large"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '2'
 
@@ -629,7 +629,7 @@ when "r3.large","r4.large","r5.large","r5a.large","r5ad.large","r6i.large","r6id
   default[:mysql][:config][:tmp_table_size]  = '256M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "r3.xlarge","r4.xlarge","r5.xlarge","r5a.xlarge","r5ad.xlarge","r6i.xlarge","r6id.xlarge"
+when "r3.xlarge","r4.xlarge","r5.xlarge","r5a.xlarge","r5ad.xlarge","r6i.xlarge","r6id.xlarge","r6a.xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '8'
 
@@ -646,7 +646,7 @@ when "r3.xlarge","r4.xlarge","r5.xlarge","r5a.xlarge","r5ad.xlarge","r6i.xlarge"
   default[:mysql][:config][:tmp_table_size]  = '256M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "r3.2xlarge","r4.2xlarge","r5.2xlarge","r5a.2xlarge","r5ad.2xlarge","r6i.2xlarge","r6id.2xlarge"
+when "r3.2xlarge","r4.2xlarge","r5.2xlarge","r5a.2xlarge","r5ad.2xlarge","r6i.2xlarge","r6id.2xlarge","r6a.2xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '8'
 
@@ -663,7 +663,7 @@ when "r3.2xlarge","r4.2xlarge","r5.2xlarge","r5a.2xlarge","r5ad.2xlarge","r6i.2x
   default[:mysql][:config][:tmp_table_size]  = '256M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "r3.4xlarge","r4.4xlarge","r5.4xlarge","r5a.4xlarge","r5ad.4xlarge","r6i.4xlarge","r6id.4xlarge"
+when "r3.4xlarge","r4.4xlarge","r5.4xlarge","r5a.4xlarge","r5ad.4xlarge","r6i.4xlarge","r6id.4xlarge","r6a.4xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '8'
 
@@ -680,7 +680,7 @@ when "r3.4xlarge","r4.4xlarge","r5.4xlarge","r5a.4xlarge","r5ad.4xlarge","r6i.4x
   default[:mysql][:config][:tmp_table_size]  = '256M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "r3.8xlarge","r4.8xlarge","r5.8xlarge","r5a.8xlarge","r5ad.8xlarge","r6i.8xlarge","r6id.8xlarge"
+when "r3.8xlarge","r4.8xlarge","r5.8xlarge","r5a.8xlarge","r5ad.8xlarge","r6i.8xlarge","r6id.8xlarge","r6a.8xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '32'
 
@@ -697,7 +697,7 @@ when "r3.8xlarge","r4.8xlarge","r5.8xlarge","r5a.8xlarge","r5ad.8xlarge","r6i.8x
   default[:mysql][:config][:tmp_table_size]  = '256M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "r6i.12xlarge","r6id.12xlarge"
+when "r6i.12xlarge","r6id.12xlarge","r6a.12xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '48'
 
@@ -714,7 +714,7 @@ when "r6i.12xlarge","r6id.12xlarge"
   default[:mysql][:config][:tmp_table_size]  = '512M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "r4.16xlarge","r5.16xlarge","r5a.16xlarge","r5ad.16xlarge","r6i.16xlarge","r6id.16xlarge"
+when "r4.16xlarge","r5.16xlarge","r5a.16xlarge","r5ad.16xlarge","r6i.16xlarge","r6id.16xlarge","r6a.16xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '64'
 
@@ -731,7 +731,7 @@ when "r4.16xlarge","r5.16xlarge","r5a.16xlarge","r5ad.16xlarge","r6i.16xlarge","
   default[:mysql][:config][:tmp_table_size]  = '512M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "r5.24xlarge","r5a.24xlarge","r5ad.24xlarge","r6i.24xlarge","r6id.24xlarge"
+when "r5.24xlarge","r5a.24xlarge","r5ad.24xlarge","r6i.24xlarge","r6id.24xlarge","r6a.24xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '96'
 
@@ -748,7 +748,7 @@ when "r5.24xlarge","r5a.24xlarge","r5ad.24xlarge","r6i.24xlarge","r6id.24xlarge"
   default[:mysql][:config][:tmp_table_size]  = '512M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "r5.metal"
+when "r5.metal","r6a.metal"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '96'
 
@@ -765,7 +765,7 @@ when "r5.metal"
   default[:mysql][:config][:tmp_table_size]  = '512M'
   default[:mysql][:config][:max_connections] = '256'
   default[:mysql][:config][:thread_cache] = '256'
-when "r6i.32xlarge","r6id.32xlarge","r6i.32xlarge","r6id.32xlarge"
+when "r6i.32xlarge","r6id.32xlarge","r6i.32xlarge","r6id.32xlarge","r6a.32xlarge"
   ## Nginx
   default[:nginx][:config][:worker_processes] = '128'
 
